@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#790000</color>
+    <color name="colorPrimaryDark">#B90000</color>
+    <color name="colorAccent">#A30000</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
+
+    <color name="colorBloodSample">#FF6464</color>
+    <color name="colorFastInsulin">#D3FAFD</color>
+    <color name="colorSlowInsulin">#E5FDD0</color>
+    <color name="colorButtonNormal">#666666</color>
+    <color name="colorButtonHighlight">#aeaeae</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorGraphBlood">#80FF0000</color>
+    <color name="colorGraphFast">#800000FF</color>
+    <color name="colorGraphSlow">#8000FF00</color>
+
+</resources>

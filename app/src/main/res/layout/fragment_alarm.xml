@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_nextalarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NEXT ALARM: 00.00.00" />
+
+    <ListView
+        android:id="@+id/list_alarmlist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!--    DIVIDER-->
+    <LinearLayout
+        android:id="@+id/lay_hidebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ic_repeat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_autorenew_24dp" />
+
+        <Spinner
+            android:id="@+id/spn_repeat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+
+        <ImageView
+            android:id="@+id/btn_hide_alarm_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="2"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_visibility_off_24dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="hh:mm dd/mm"
+            android:textSize="18sp"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:orientation="horizontal">
+
+<!--RADIOGROUP-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <RadioGroup
+                android:id="@+id/rg_alarmtype"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checkedButton="@+id/alarm_bloodSample">
+
+                <RadioButton
+                    android:id="@+id/alarm_bloodSample"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_blood_drop" />
+
+                <RadioButton
+                    android:id="@+id/alarm_fastInsulin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_rabbit" />
+
+                <RadioButton
+                    android:id="@+id/alarm_slowInsulin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_turtle" />
+
+                <RadioButton
+                    android:id="@+id/alarm_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_notifications_black_24dp" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <NumberPicker
+            android:id="@+id/alarm_hour"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:theme="@style/NumberPickerText" />
+
+        <NumberPicker
+            android:id="@+id/alarm_minutes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:theme="@style/NumberPickerText" />
+
+<!--        BUTTONS-->
+        <LinearLayout
+            android:id="@+id/lay_repeating"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_setdate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg_selector"
+                android:text="Date" />
+
+            <Button
+                android:id="@+id/btn_setalarm"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg_selector"
+                android:text="Set" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

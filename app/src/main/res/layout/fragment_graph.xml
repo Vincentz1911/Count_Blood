@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--    GRAPHVIEW-->
+    <LinearLayout
+        android:id="@+id/layout_graph"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" />
+
+    <!--    DIVIDER-->
+    <LinearLayout
+        android:id="@+id/lay_hidebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_fromDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="dd/mm-yyyy"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/btn_hide_graph_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_visibility_off_24dp" />
+
+        <TextView
+            android:id="@+id/txt_toDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="dd/mm-yyyy"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!--    CONTROLS-->
+    <LinearLayout
+        android:id="@+id/layout_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <!--        SWITCH LAYOUT-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="end">
+
+            <Switch
+                android:id="@+id/switch_blood"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:drawableStart="@drawable/ic_blood_drop" />
+
+            <Switch
+                android:id="@+id/switch_average"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text=" X̄ "
+                android:textSize="30sp" />
+
+            <Switch
+                android:id="@+id/switch_shortterm"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/ic_rabbit" />
+
+            <Switch
+                android:id="@+id/switch_longterm"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/ic_turtle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--        DATE BUTTONS-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/btn_fromback"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:src="@drawable/ic_trianglearrow_left"
+                    android:background="@drawable/btn_bg_selector" />
+
+                <ImageButton
+                    android:id="@+id/button_datefrom"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:src="@drawable/ic_date_range_black_24dp"
+                    android:background="@drawable/btn_bg_selector" />
+
+                <ImageButton
+                    android:id="@+id/btn_fromforward"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:src="@drawable/ic_trianglearrow_right"
+                    android:background="@drawable/btn_bg_selector" />
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal">-->
+<!--&lt;!&ndash;                <ImageButton&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:src="@drawable/ic_skip_previous_24dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:background="@drawable/btn_bg_selector" />&ndash;&gt;-->
+<!--                <ImageButton-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:src="@drawable/ic_fast_rewind_24dp"-->
+<!--                    android:background="@drawable/btn_bg_selector" />-->
+
+<!--                <ImageButton-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:src="@drawable/ic_fast_forward_24dp"-->
+<!--                    android:background="@drawable/btn_bg_selector" />-->
+<!--&lt;!&ndash;                <ImageButton&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:src="@drawable/ic_skip_next_24dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:background="@drawable/btn_bg_selector" />&ndash;&gt;-->
+<!--            </LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/btn_toback"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:src="@drawable/ic_trianglearrow_left"
+                    android:background="@drawable/btn_bg_selector" />
+
+                <ImageButton
+                    android:id="@+id/button_dateto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:src="@drawable/ic_event_black_24dp"
+                    android:background="@drawable/btn_bg_selector" />
+
+                <ImageButton
+                    android:id="@+id/btn_toforward"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:src="@drawable/ic_trianglearrow_right"
+                    android:background="@drawable/btn_bg_selector" />
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal">-->
+<!--                <ImageButton-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:src="@drawable/ic_fast_rewind_24dp"-->
+<!--                    android:background="@drawable/btn_bg_selector" />-->
+
+<!--                <ImageButton-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:src="@drawable/ic_fast_forward_24dp"-->
+<!--                    android:background="@drawable/btn_bg_selector" />-->
+<!--            </LinearLayout>-->
+
+        </LinearLayout>
+
+        <!--        RADIOBUTTONS-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center">
+
+            <RadioGroup
+                android:id="@+id/rg_timeframe"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/rb_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Day" />
+
+                <RadioButton
+                    android:id="@+id/rb_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Week" />
+
+                <RadioButton
+                    android:id="@+id/rb_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Month" />
+
+                <RadioButton
+                    android:id="@+id/rb_quarter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Quarter" />
+
+                <RadioButton
+                    android:id="@+id/rb_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Year" />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
