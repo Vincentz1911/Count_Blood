@@ -143,8 +143,9 @@
                 android:id="@+id/btn_numpad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:background="@drawable/btn_bg_selector"
-                android:src="@drawable/ic_keyboard_black_24dp" />
+                android:src="@drawable/ic_keyboard_36dp" />
 
             <Button
                 android:id="@+id/btn_add"

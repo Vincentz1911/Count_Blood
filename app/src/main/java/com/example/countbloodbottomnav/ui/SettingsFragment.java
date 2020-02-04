@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
-class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
     //region UI
     private View view;

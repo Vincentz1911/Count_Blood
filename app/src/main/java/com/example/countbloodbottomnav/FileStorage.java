@@ -51,8 +51,7 @@ public class FileStorage {
 
     ArrayList<ModelAlarm> loadAlarms() {
         String json = sp.getString("alarmlist", null);
-        Type type = new TypeToken<ModelAlarm>() {
-        }.getType();
+        Type type = new TypeToken<ArrayList<ModelAlarm>>() {}.getType();
         ArrayList<ModelAlarm> list = new Gson().fromJson(json, type);
         if (list == null) list = new ArrayList<>();
         return list;

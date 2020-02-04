@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.notifications;
+package com.example.countbloodbottomnav.ui.alarm;
 
 import androidx.core.app.NotificationCompat;
 import android.app.NotificationManager;
@@ -11,7 +11,7 @@ import com.example.countbloodbottomnav.SplashActivity;
 
 import static com.example.countbloodbottomnav.StartUp.CHANNEL_1_ID;
 
-public class Notification_receiver extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

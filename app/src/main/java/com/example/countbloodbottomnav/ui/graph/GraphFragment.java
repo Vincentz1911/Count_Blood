@@ -28,6 +28,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
@@ -41,9 +43,9 @@ public class GraphFragment extends Fragment {
     private ImageView btn_hide;
     private Switch sw_blood, sw_average, sw_short, sw_long;
     private RadioGroup rg_timeframe;
-    private DatePickerDialog.OnDateSetListener onDateSetListener;
     //endregion
     private MainActivity MA;
+    private DatePickerDialog.OnDateSetListener onDateSetListener;
     private DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     private Date fromDate, toDate;
     private boolean isFromDate = true;
@@ -179,6 +181,7 @@ public class GraphFragment extends Fragment {
     }
 
     private void hideAndSeek() {
+        // Shows graph controls if button pushed else hides controls
         if (lay_bottom.getVisibility() == View.GONE) {
             lay_bottom.setVisibility(View.VISIBLE);
             btn_hide.setImageDrawable(ResourcesCompat.getDrawable(
@@ -194,8 +197,6 @@ public class GraphFragment extends Fragment {
             btn_hide.setImageDrawable(ResourcesCompat.getDrawable(
                     getResources(), R.drawable.ic_visibility_24dp, null));
 
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-                lay_graph.setVisibility(View.VISIBLE);
         }
     }
 
@@ -233,12 +234,13 @@ public class GraphFragment extends Fragment {
         rg_timeframe.check(MA.graph.getId_radioGroup());
 
         lay_graph.removeAllViewsInLayout();
+        //MA.graph.setList();
         lay_graph.addView(new GraphView(getActivity(), MA.graph));
     }
 
     private ModelGraph createGraphSetup() {
+        //Creates modelGraph for grid and layout
         ModelGraph mgs;
-
         switch (rg_timeframe.getCheckedRadioButtonId()) {
             case R.id.rb_day:
                 String[] xDay = {"00:00", "06:00", "12:00", "18:00", "24:00"};
@@ -278,21 +280,25 @@ public class GraphFragment extends Fragment {
     private ArrayList<ModelGraphData> createGraphDataList(int days) {
         ArrayList<ModelGraphData> list = new ArrayList<>();
 
+        //Compares dates to get correct data from date interval
         for (ModelData data : MA.list) {
             if (data.getDate().compareTo(fromDate) > 0 && data.getDate().compareTo(toDate) < 0) {
+
+                //sets time of day (tod)
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(data.getDate());
-                float x = 0;
-                float tod = ((cal.get(Calendar.HOUR_OF_DAY) / 24f) +
+                float x = 0, tod = ((cal.get(Calendar.HOUR_OF_DAY) / 24f) +
                         (cal.get(Calendar.MINUTE) / (24f * 60)) +
                         (cal.get(Calendar.SECOND) / (24f * 60 * 60)));
 
+                //Spread out daily data depending on the timeframe
                 if (days == 1) x = tod;
                 else if (days == 7) x = ((cal.get(Calendar.DAY_OF_WEEK) - 1 + tod) / 7f);
                 else if (days == 31) x = ((cal.get(Calendar.DAY_OF_MONTH) - 1 + tod) / 31f);
                 else if (days == 91) x = (((cal.get(Calendar.DAY_OF_YEAR) - 1) % 91) / 91f);
                 else if (days == 365) x = ((cal.get(Calendar.DAY_OF_YEAR) - 1 + tod) / 365f);
 
+                //Adds data to list if checked and correct type
                 if (sw_blood.isChecked() && data.getType() == 0)
                     list.add(new ModelGraphData(x, data.getAmount(), data.getType()));
                 if (sw_short.isChecked() && data.getType() == 1)
@@ -301,6 +307,12 @@ public class GraphFragment extends Fragment {
                     list.add(new ModelGraphData(x, data.getAmount(), data.getType()));
             }
         }
+
+        //Sorts list so draw insulin first and blood on top
+        Collections.sort(list, new Comparator<ModelGraphData>() {
+            public int compare(ModelGraphData obj1, ModelGraphData obj2) {
+                return Integer.compare(obj2.getP(), obj1.getP()); }});
+
         return list;
     }
 }

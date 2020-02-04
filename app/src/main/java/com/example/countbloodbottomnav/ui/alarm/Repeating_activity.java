@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.notifications;
+package com.example.countbloodbottomnav.ui.alarm;
 
 import android.os.Bundle;
 

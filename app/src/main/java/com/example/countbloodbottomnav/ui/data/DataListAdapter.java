@@ -25,9 +25,8 @@ class DataListAdapter extends ArrayAdapter<ModelData> {
     private List<ModelData> list;
     private float high, low;
 
-    public DataListAdapter(@NonNull Context context, ArrayList<ModelData> list, float high, float low) {
+    DataListAdapter(@NonNull Context context, ArrayList<ModelData> list, float high, float low) {
         super(context, 0, list);
-
         this.list = list;
         this.high = high;
         this.low = low;
@@ -37,7 +36,8 @@ class DataListAdapter extends ArrayAdapter<ModelData> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
-        if (listItem == null) listItem = LayoutInflater.from(getContext()).inflate(R.layout.datalist_item,parent,false);
+        if (listItem == null)
+            listItem = LayoutInflater.from(getContext()).inflate(R.layout.datalist_item, parent, false);
 
         ModelData data = list.get(position);
 

@@ -11,8 +11,6 @@ import com.example.countbloodbottomnav.R;
 import com.example.countbloodbottomnav.models.ModelGraphData;
 import com.example.countbloodbottomnav.models.ModelGraph;
 
-import java.util.concurrent.TimeUnit;
-
 @SuppressLint("ViewConstructor")
 public class GraphView extends View {
 
@@ -44,11 +42,11 @@ public class GraphView extends View {
 
         paint_fast = new Paint();
         paint_fast.setColor(getResources().getColor(R.color.colorGraphFast));
-        paint_fast.setStyle(Paint.Style.FILL);
+        paint_fast.setStrokeWidth(2);
 
         paint_slow = new Paint();
         paint_slow.setColor(getResources().getColor(R.color.colorGraphSlow));
-        paint_slow.setStyle(Paint.Style.FILL);
+        paint_fast.setStrokeWidth(2);
 
         paint1 = new Paint();
         paint1.setColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -74,6 +72,13 @@ public class GraphView extends View {
         int x0 = 0, x1 = getWidth() - 200, y0 = 0, y1 = -getHeight() + 200;
         canvas.translate(100, getHeight() - 100);
 
+        //Add number of days and amount of data as text on top
+        long diff =  graph.getEnd().getTime() - graph.getStart().getTime();
+        int numDays = (int) java.util.concurrent.TimeUnit.DAYS.convert(diff, java.util.concurrent.TimeUnit.MILLISECONDS);
+        String s = "# Days : " + numDays + " # Data : " + graph.getList().size();
+        canvas.drawText(s, x1/2, y1-10, paints[5]);
+
+        //Draws grid
         for (int x = 0; x <= xGrid; x++) {
             int xPos = x * x1 / xGrid;
             if (isInt(x, xDiv)) {
@@ -91,14 +96,11 @@ public class GraphView extends View {
             }
         }
 
-        float yP = y1 / graph.getyGrid();
-        for (ModelGraphData d : graph.getList())
-            canvas.drawCircle(
-                    d.getX() * x1, d.getY() * yP, 10, paints[d.getP()]);
+        //Draw circles for bloodsample and lines for insulin
+        for (ModelGraphData d : graph.getList()){
+            if (d.getP() == 0) canvas.drawCircle(d.getX() * x1, d.getY() * y1 / graph.getyGrid(), 10, paints[d.getP()]);
+            else canvas.drawLine(d.getX() * x1, d.getY() * y1 / graph.getyGrid(), d.getX() * x1, y0, paints[d.getP()]);
+        }
 
-        long diff =  graph.getEnd().getTime() - graph.getStart().getTime();
-        int numDays = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        String s = "# Days : " + numDays + " # Data : " + graph.getList().size();
-        canvas.drawText(s, x1/2, y1-10, paints[5]);
     }
 }

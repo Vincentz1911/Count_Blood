@@ -66,8 +66,7 @@ public class DataFragment extends Fragment {
     private void initUI() {
         lay_bottom = view.findViewById(R.id.lay_addData);
 
-        adapter = new DataListAdapter(Objects.requireNonNull(getContext()),
-                MA.list, MA.settings.getHighBS(), MA.settings.getLowBS());
+        adapter = new DataListAdapter(getContext(), MA.list, MA.settings.getHighBS(), MA.settings.getLowBS());
         listView = view.findViewById(R.id.listView);
         listView.setAdapter(adapter);
 
@@ -93,6 +92,7 @@ public class DataFragment extends Fragment {
 
     private void initOnClick() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) { deleteSample(position); }});
 
         btn_sortDate.setOnClickListener(new View.OnClickListener() {

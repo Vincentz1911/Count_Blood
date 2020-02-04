@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ui.notifications.Repeating_activity"/>
-        <receiver android:name=".ui.notifications.Notification_receiver"/>
+        <activity android:name=".ui.alarm.Repeating_activity"/>
+        <receiver android:name=".ui.alarm.AlarmReceiver"/>
     </application>
 </manifest>

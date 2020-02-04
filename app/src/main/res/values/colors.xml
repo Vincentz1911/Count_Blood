@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#790000</color>
     <color name="colorPrimaryDark">#B90000</color>
-    <color name="colorAccent">#A30000</color>
+    <color name="colorAccent">#C70000</color>
     <color name="ic_launcher_background">#FFFFFF</color>
 
     <color name="colorBloodSample">#FF6464</color>
@@ -16,5 +16,4 @@
     <color name="colorGraphBlood">#80FF0000</color>
     <color name="colorGraphFast">#800000FF</color>
     <color name="colorGraphSlow">#8000FF00</color>
-
 </resources>

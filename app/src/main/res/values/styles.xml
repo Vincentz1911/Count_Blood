@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="buttonStyle">@style/AppTheme.Button</item>
-        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+<!--        <item name="android:buttonStyle">@style/AppTheme.Button</item>-->
         <item name="android:datePickerStyle">@style/customDateDialog</item>
         <item name="colorButtonNormal">@color/colorButtonNormal</item>
         <item name="colorControlHighlight">@color/colorButtonHighlight</item>

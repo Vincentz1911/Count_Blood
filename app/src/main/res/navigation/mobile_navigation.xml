@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.countbloodbottomnav.ui.notifications.NotificationsFragment"
+        android:name="com.example.countbloodbottomnav.ui.alarm.AlarmFragment"
         android:label="@string/title_alarm"
         tools:layout="@layout/fragment_alarm" />
 
