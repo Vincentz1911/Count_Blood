@@ -40,7 +40,11 @@ public class SendMailFragment extends Fragment {
         initUI();
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { writeCSV(); sendEmail(); }});
+            public void onClick(View v) {
+                writeCSV();
+                sendEmail();
+            }
+        });
         return view;
     }
 

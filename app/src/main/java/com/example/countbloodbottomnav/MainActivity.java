@@ -1,6 +1,8 @@
 package com.example.countbloodbottomnav;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -25,12 +27,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.util.ArrayList;
 
+import com.example.countbloodbottomnav.models.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import com.example.countbloodbottomnav.models.ModelData;
-import com.example.countbloodbottomnav.models.ModelGraph;
-import com.example.countbloodbottomnav.models.ModelAlarm;
-import com.example.countbloodbottomnav.models.ModelSettings;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,12 +41,16 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private ActionBar sab;
 
+    public static final String CHANNEL_1_ID = "channel1";
+    public static final String CHANNEL_2_ID = "channel2";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sab = getSupportActionBar();
         setupNavBar();
+        createNotificationChannels();
 
         IO = new FileStorage(getSharedPreferences("shared preferences", Context.MODE_PRIVATE));
         list = IO.loadData();
@@ -101,9 +103,12 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.navigation_settings);
                 return true;
             case R.id.navigation_send_mail:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) askPermissions();
-                navController.navigate(R.id.navigation_send_mail);
-                return true;
+                if (list.size() > 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) askPermissions();
+                    navController.navigate(R.id.navigation_send_mail);
+                    return true;
+                }
+                else toast("There is nothing to send");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -120,6 +125,28 @@ public class MainActivity extends AppCompatActivity {
             Log.v("", "Permission is granted");
         else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
+    }
+
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel1 = new NotificationChannel(
+                    CHANNEL_1_ID,
+                    "Channel 1",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel1.setDescription("This is Channel 1");
+
+            NotificationChannel channel2 = new NotificationChannel(
+                    CHANNEL_2_ID,
+                    "Channel 2",
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            channel2.setDescription("This is Channel 2");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel1);
+            manager.createNotificationChannel(channel2);
         }
     }
 }

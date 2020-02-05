@@ -9,7 +9,7 @@ import android.content.Intent;
 
 import com.example.countbloodbottomnav.SplashActivity;
 
-import static com.example.countbloodbottomnav.StartUp.CHANNEL_1_ID;
+import static com.example.countbloodbottomnav.MainActivity.CHANNEL_1_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

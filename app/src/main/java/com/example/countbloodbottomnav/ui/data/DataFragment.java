@@ -30,10 +30,10 @@ import com.example.countbloodbottomnav.MainActivity;
 import com.example.countbloodbottomnav.models.ModelData;
 import com.example.countbloodbottomnav.R;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Objects;
 
 public class DataFragment extends Fragment {
 
@@ -85,6 +85,7 @@ public class DataFragment extends Fragment {
         btn_hide = view.findViewById(R.id.btn_hide_home_input);
         btn_sortDate = view.findViewById(R.id.btn_sortDate);
         btn_sortValue = view.findViewById(R.id.btn_sortValue);
+
         radioGroup = view.findViewById(R.id.radioGroup);
         txt_bsAmount = view.findViewById(R.id.txt_numSamples);
         txt_bsAverage = view.findViewById(R.id.txt_avgSamples);
@@ -160,8 +161,8 @@ public class DataFragment extends Fragment {
         }
         float avg = amount / total;
         txt_bsAmount.setText(getResources().getQuantityString(R.plurals.samples, total, total));
-        //txt_bsAverage.setText(String.format("Average : %.2f", avg));
-        txt_bsAverage.setText(String.format("Average : %.2f", avg));
+        txt_bsAverage.setText(getResources().getQuantityString(R.plurals.average,
+                (int)avg, new DecimalFormat("#.##").format(avg)));
     }
 
     private void addNewSample(float value, int type) {
@@ -253,7 +254,7 @@ public class DataFragment extends Fragment {
     private void sortByDate() {
         if (isSortedDate) {
             isSortedDate = false;
-            btn_sortDate.setText("▲     Date     ▲");
+            btn_sortDate.setText(R.string.date_sort_up);
             btn_sortValue.setText(R.string.value);
             Collections.sort(MA.list, new Comparator<ModelData>() {
                 public int compare(ModelData obj1, ModelData obj2) {
@@ -262,7 +263,7 @@ public class DataFragment extends Fragment {
             });
         } else {
             isSortedDate = true;
-            btn_sortDate.setText("▼     Date     ▼");
+            btn_sortDate.setText(R.string.date_sort_down);
             btn_sortValue.setText(R.string.value);
             Collections.sort(MA.list, new Comparator<ModelData>() {
                 public int compare(ModelData obj1, ModelData obj2) {
@@ -277,7 +278,7 @@ public class DataFragment extends Fragment {
         if (!isSortedValue) {
             isSortedValue = true;
             btn_sortDate.setText(R.string.date);
-            btn_sortValue.setText("▼     Value     ▼");
+            btn_sortValue.setText(R.string.value_sort_down);
             Collections.sort(MA.list, new Comparator<ModelData>() {
                 public int compare(ModelData obj1, ModelData obj2) {
                     return Float.compare(obj2.getAmount(), obj1.getAmount());
@@ -286,7 +287,7 @@ public class DataFragment extends Fragment {
         } else {
             isSortedValue = false;
             btn_sortDate.setText(R.string.date);
-            btn_sortValue.setText("▲     Value     ▲");
+            btn_sortValue.setText(R.string.value_sort_up);
             Collections.sort(MA.list, new Comparator<ModelData>() {
                 public int compare(ModelData obj1, ModelData obj2) {
                     return Float.compare(obj1.getAmount(), obj2.getAmount());

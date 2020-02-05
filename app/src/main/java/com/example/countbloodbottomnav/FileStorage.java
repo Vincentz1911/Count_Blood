@@ -1,28 +1,30 @@
 package com.example.countbloodbottomnav;
 
 import android.content.SharedPreferences;
+
+import com.example.countbloodbottomnav.models.ModelAlarm;
+import com.example.countbloodbottomnav.models.ModelData;
+import com.example.countbloodbottomnav.models.ModelGraph;
+import com.example.countbloodbottomnav.models.ModelSettings;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import com.example.countbloodbottomnav.models.ModelData;
-import com.example.countbloodbottomnav.models.ModelAlarm;
-import com.example.countbloodbottomnav.models.ModelSettings;
-import com.example.countbloodbottomnav.models.ModelGraph;
 
 public class FileStorage {
 
     private SharedPreferences sp;
 
-    FileStorage(SharedPreferences sharedPreferences) { this.sp = sharedPreferences; }
+    public FileStorage(SharedPreferences sharedPreferences) { this.sp = sharedPreferences; }
 
     public void saveData(ArrayList<ModelData> list) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("samplelist", new Gson().toJson(list)).apply();
     }
 
-    ArrayList<ModelData> loadData() {
+    public ArrayList<ModelData> loadData() {
         String json = sp.getString("samplelist", null);
         Type type = new TypeToken<ArrayList<ModelData>>() {}.getType();
         ArrayList<ModelData> list = new Gson().fromJson(json, type);
@@ -35,7 +37,7 @@ public class FileStorage {
         editor.putString("settings", new Gson().toJson(settings)).apply();
     }
 
-    ModelSettings loadSettings() {
+    public ModelSettings loadSettings() {
         String json = sp.getString("settings", null);
         Type type = new TypeToken<ModelSettings>() {}.getType();
         ModelSettings settings = new Gson().fromJson(json, type);
@@ -49,7 +51,7 @@ public class FileStorage {
         editor.putString("alarmlist", new Gson().toJson(list)).apply();
     }
 
-    ArrayList<ModelAlarm> loadAlarms() {
+    public ArrayList<ModelAlarm> loadAlarms() {
         String json = sp.getString("alarmlist", null);
         Type type = new TypeToken<ArrayList<ModelAlarm>>() {}.getType();
         ArrayList<ModelAlarm> list = new Gson().fromJson(json, type);
@@ -62,7 +64,7 @@ public class FileStorage {
         editor.putString("graph", new Gson().toJson(graph)).apply();
     }
 
-    ModelGraph loadGraph() {
+    public ModelGraph loadGraph() {
         String json = sp.getString("graph", null);
         Type type = new TypeToken<ModelGraph>() {}.getType();
         return new Gson().fromJson(json, type);

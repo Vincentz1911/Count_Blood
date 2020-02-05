@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -69,57 +68,6 @@ public class AlarmFragment extends Fragment {
         return view;
     }
 
-    private void initOnClick() {
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//            {
-//                int a = 0;
-//            }});
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                int a=1;
-//            }
-//        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int a = 0;
-                LinearLayout drawer = view.findViewById(R.id.lay_drawer);
-                if (drawer.getVisibility() == View.GONE) drawer.setVisibility(View.VISIBLE);
-                else drawer.setVisibility(View.GONE);
-
-                //TODO add functionality to item click (edit / delete)
-            }
-        });
-
-        btn_setAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAlarm(getAlarm());
-            }
-        });
-        btn_setdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDatePicker(yS, mS, dS);
-            }
-        });
-
-        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int y, int m, int d) {
-                Calendar cal = Calendar.getInstance();
-                cal.set(y, m, d);
-                alarm.setDate(cal.getTime());
-            }
-        };
-    }
-
-
     private void initUI() {
         btn_setdate = view.findViewById(R.id.btn_setdate);
         btn_setAlarm = view.findViewById(R.id.btn_setalarm);
@@ -162,10 +110,46 @@ public class AlarmFragment extends Fragment {
         sp_repeatinterval.setAdapter(spnAdapter);
     }
 
+    private void initOnClick() {
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int a = 0;
+                LinearLayout drawer = view.findViewById(R.id.lay_drawer);
+                if (drawer.getVisibility() == View.GONE) drawer.setVisibility(View.VISIBLE);
+                else drawer.setVisibility(View.GONE);
+
+                //TODO add functionality to item click (edit / delete)
+            }
+        });
+
+        btn_setAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAlarm(getAlarm());
+            }
+        });
+        btn_setdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDatePicker(yS, mS, dS);
+            }
+        });
+
+        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int y, int m, int d) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(y, m, d);
+                alarm.setDate(cal.getTime());
+            }
+        };
+    }
+
     private void updateAlarmView() {
         adapter.notifyDataSetChanged();
         np_hour.setValue(cal.get(Calendar.HOUR_OF_DAY));
-
     }
 
     private void createDatePicker(int yS, int mS, int dS) {
@@ -178,7 +162,6 @@ public class AlarmFragment extends Fragment {
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH));
         dialog.getDatePicker().setMinDate(System.currentTimeMillis());
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(R.drawable.gradient));
         dialog.show();
     }

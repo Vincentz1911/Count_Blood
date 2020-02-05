@@ -55,7 +55,8 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_visibility_off_24dp" />
+            android:src="@drawable/ic_visibility_off_24dp"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/txt_avgSamples"
@@ -85,29 +86,25 @@
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checkedButton="@+id/rb_blood">
-
+                android:layout_height="match_parent">
                 <RadioButton
                     android:id="@+id/rb_blood"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_blood_drop" />
-
+                    android:drawableEnd="@drawable/ic_blood_drop" />
                 <RadioButton
                     android:id="@+id/rb_fast"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_rabbit" />
-
+                    android:drawableEnd="@drawable/ic_rabbit" />
                 <RadioButton
                     android:id="@+id/rb_slow"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_turtle" />
+                    android:drawableEnd="@drawable/ic_turtle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -115,6 +112,7 @@
             android:id="@+id/np1_home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:fadingEdgeLength="20000dp"
             android:layout_weight="2"
             android:theme="@style/NumberPickerText" />
 
@@ -145,7 +143,8 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:background="@drawable/btn_bg_selector"
-                android:src="@drawable/ic_keyboard_36dp" />
+                android:src="@drawable/ic_keyboard_36dp"
+                android:contentDescription="@string/todo" />
 
             <Button
                 android:id="@+id/btn_add"

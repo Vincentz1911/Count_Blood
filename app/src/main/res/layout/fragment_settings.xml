@@ -1,269 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SettingsFragment">
+    android:orientation="vertical">
 
+    <!--        BOTTOM BUTTONS-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
 
-<!--        TOP-->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="@string/reset_list" />
+
+        <Button
+            android:id="@+id/btn_generatelist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/generate_list" />
+    </LinearLayout>
+
+    <!--        TOP-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="3"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_defaultEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Default Email Reciever" />
+                android:text="@string/default_email_reciever" />
 
             <EditText
                 android:id="@+id/input_defaultEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:hint="@string/reciever_mail_com"/>
         </LinearLayout>
 
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/btn_saveSettings"
-                android:layout_weight="4"
-                android:background="@drawable/btn_bg_selector"
-                android:src="@drawable/ic_save_black_24dp" />
-
-        </LinearLayout>
-
-<!--        DEFAULT VALUES-->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btn_saveSettings"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/txt_defaultBloodSugar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Default Bloodsugar"
-                    android:gravity="center"/>
-
-                <NumberPicker
-                    android:id="@+id/spn_defaultBS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/NumberPickerText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@color/colorFastInsulin">
-
-                <TextView
-                    android:id="@+id/txt_defaultShortTerm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Short Term Insulin"
-                    android:gravity="center"/>
-
-                <NumberPicker
-                    android:id="@+id/spn_ShortTerm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/NumberPickerText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@color/colorSlowInsulin">
-
-                <TextView
-                    android:id="@+id/txt_defaultLongTerm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Long Term Morning"
-                    android:gravity="center"/>
-
-                <NumberPicker
-                    android:id="@+id/spn_LongTerm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/NumberPickerText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@color/colorSlowInsulin">
-
-                <TextView
-                    android:id="@+id/txt_defaultLongTermEve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Long Term Evening"
-                    android:gravity="center"/>
-
-                <NumberPicker
-                    android:id="@+id/spn_LongTermEve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/NumberPickerText" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-<!--        DEFAULT WARNING VALUES-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txt_low"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Low Blood Sugar"
-                    android:layout_gravity="center"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <NumberPicker
-                        android:id="@+id/spn_LowBS"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/NumberPickerText" />
-
-                    <TextView
-                        android:id="@+id/divider1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="," />
-
-                    <NumberPicker
-                        android:id="@+id/spn_LowBSDec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/NumberPickerText" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txt_high"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="High Blood Sugar"
-                    android:layout_gravity="center"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-                    <NumberPicker
-                        android:id="@+id/spn_HighBS"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/NumberPickerText"/>
-                    <TextView
-                        android:id="@+id/divider2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text=","/>
-                    <NumberPicker
-                        android:id="@+id/spn_HighBSDec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/NumberPickerText" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-<!--        BOTTOM BUTTONS-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            >
-
-        <Button
-            android:id="@+id/btn_reset"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#ffffff"
-            android:text="Reset List"
-            android:background="@drawable/btn_bg_selector"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_generatelist"
-            android:layout_weight="1"
-            android:textColor="#ffffff"
-            android:text="Generate list"
-            android:background="@drawable/btn_bg_selector"/>
-        </LinearLayout>
+            android:background="@drawable/btn_bg_selector"
+            android:src="@drawable/ic_save_black_24dp"
+            android:contentDescription="@string/todo" />
 
     </LinearLayout>
-</FrameLayout>
+
+    <!--        DEFAULT VALUES-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_defaultBloodSugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/default_bloodsugar" />
+
+            <NumberPicker
+                android:id="@+id/spn_defaultBS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/NumberPickerText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorFastInsulin"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_defaultShortTerm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/short_term_insulin" />
+
+            <NumberPicker
+                android:id="@+id/spn_ShortTerm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/NumberPickerText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorSlowInsulin"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_defaultLongTerm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/long_term_morning" />
+
+            <NumberPicker
+                android:id="@+id/spn_LongTerm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/NumberPickerText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorSlowInsulin"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_defaultLongTermEve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/long_term_evening" />
+
+            <NumberPicker
+                android:id="@+id/spn_LongTermEve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/NumberPickerText" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!--        DEFAULT WARNING VALUES-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/low_blood_sugar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <NumberPicker
+                    android:id="@+id/spn_LowBS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NumberPickerText" />
+
+                <TextView
+                    android:id="@+id/divider1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/divider" />
+
+                <NumberPicker
+                    android:id="@+id/spn_LowBSDec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NumberPickerText" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/high_blood_sugar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <NumberPicker
+                    android:id="@+id/spn_HighBS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NumberPickerText" />
+
+                <TextView
+                    android:id="@+id/divider2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/divider" />
+
+                <NumberPicker
+                    android:id="@+id/spn_HighBSDec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NumberPickerText" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

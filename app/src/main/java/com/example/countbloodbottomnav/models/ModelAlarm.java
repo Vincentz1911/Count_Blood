@@ -10,7 +10,7 @@ public class ModelAlarm implements Serializable {
     private Date date;
     private boolean isRepeating;
 
-    public ModelAlarm() { };
+    public ModelAlarm() { }
 
     public ModelAlarm(String title, String message, int requestCode, Date date, int icon,
                       boolean isRepeating, int repeatInterval) {

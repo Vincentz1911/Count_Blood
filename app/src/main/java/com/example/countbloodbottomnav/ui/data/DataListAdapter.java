@@ -47,7 +47,8 @@ class DataListAdapter extends ArrayAdapter<ModelData> {
         date.setText(formatter.format(listdate));
 
         TextView sample = listItem.findViewById(R.id.txt_sample);
-        sample.setText(Float.toString(data.getAmount()));
+        //sample.setText(Float.toString(data.getAmount()));
+        sample.setText(String.format("%s", data.getAmount()));  //Float.toString(data.getAmount()));
         ImageView imageView = listItem.findViewById(R.id.listImage);
 
         switch (data.getType()) {
