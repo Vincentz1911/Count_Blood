@@ -17,16 +17,19 @@ public class FileStorage {
 
     private SharedPreferences sp;
 
-    public FileStorage(SharedPreferences sharedPreferences) { this.sp = sharedPreferences; }
+    FileStorage(SharedPreferences sharedPreferences) {
+        this.sp = sharedPreferences;
+    }
 
     public void saveData(ArrayList<ModelData> list) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("samplelist", new Gson().toJson(list)).apply();
     }
 
-    public ArrayList<ModelData> loadData() {
+    ArrayList<ModelData> loadData() {
         String json = sp.getString("samplelist", null);
-        Type type = new TypeToken<ArrayList<ModelData>>() {}.getType();
+        Type type = new TypeToken<ArrayList<ModelData>>() {
+        }.getType();
         ArrayList<ModelData> list = new Gson().fromJson(json, type);
         if (list == null) list = new ArrayList<>();
         return list;
@@ -37,9 +40,10 @@ public class FileStorage {
         editor.putString("settings", new Gson().toJson(settings)).apply();
     }
 
-    public ModelSettings loadSettings() {
+    ModelSettings loadSettings() {
         String json = sp.getString("settings", null);
-        Type type = new TypeToken<ModelSettings>() {}.getType();
+        Type type = new TypeToken<ModelSettings>() {
+        }.getType();
         ModelSettings settings = new Gson().fromJson(json, type);
         if (settings == null) settings = new ModelSettings(4f, 10f, 6f,
                 8, 15, 10, "recipient@mail.com");
@@ -51,9 +55,10 @@ public class FileStorage {
         editor.putString("alarmlist", new Gson().toJson(list)).apply();
     }
 
-    public ArrayList<ModelAlarm> loadAlarms() {
+    ArrayList<ModelAlarm> loadAlarms() {
         String json = sp.getString("alarmlist", null);
-        Type type = new TypeToken<ArrayList<ModelAlarm>>() {}.getType();
+        Type type = new TypeToken<ArrayList<ModelAlarm>>() {
+        }.getType();
         ArrayList<ModelAlarm> list = new Gson().fromJson(json, type);
         if (list == null) list = new ArrayList<>();
         return list;
@@ -64,9 +69,10 @@ public class FileStorage {
         editor.putString("graph", new Gson().toJson(graph)).apply();
     }
 
-    public ModelGraph loadGraph() {
+    ModelGraph loadGraph() {
         String json = sp.getString("graph", null);
-        Type type = new TypeToken<ModelGraph>() {}.getType();
+        Type type = new TypeToken<ModelGraph>() {
+        }.getType();
         return new Gson().fromJson(json, type);
     }
 }

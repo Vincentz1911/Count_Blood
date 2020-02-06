@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class SendMailFragment extends Fragment {
+public class EmailFragment extends Fragment {
 
     //region UI
     private Button btn_send;

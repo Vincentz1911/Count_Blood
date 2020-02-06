@@ -44,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
-    public static SimpleDateFormat datetime = new SimpleDateFormat("HH:mm EEE d MMM", Locale.getDefault());
-    public static SimpleDateFormat date = new SimpleDateFormat("EEE d MMM", Locale.getDefault());
+
+    public static SimpleDateFormat datetime =
+            new SimpleDateFormat("HH:mm EEE d MMM", Locale.getDefault());
+    public static SimpleDateFormat date =
+            new SimpleDateFormat("EEE d MMM", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
     private void createNavBar() {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(
-                R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications,
+                R.id.navigation_data,
+                R.id.navigation_graph,
+                R.id.navigation_alarm,
                 R.id.navigation_settings,
-                R.id.navigation_send_mail).build();
+                R.id.navigation_email).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
         NavigationUI.setupWithNavController(navView, navController);
@@ -112,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_settings:
                 navController.navigate(R.id.navigation_settings);
                 return true;
-            case R.id.navigation_send_mail:
+            case R.id.navigation_email:
                 if (data_list.size() > 0) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) askPermissions();
-                    navController.navigate(R.id.navigation_send_mail);
+                    navController.navigate(R.id.navigation_email);
                     return true;
                 } else toast("There is nothing to send");
         }

@@ -42,6 +42,8 @@
     <string name="month">Month</string>
     <string name="quarter">Quarter</string>
     <string name="year">Year</string>
+    <string name="send_mail">Send Mail</string>
+    <string name="settings">Settings</string>
 
 
     <plurals name="samples">
