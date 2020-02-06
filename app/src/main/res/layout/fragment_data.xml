@@ -145,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/todo"
-                android:src="@drawable/ic_keyboard_36dp" />
+                android:src="@drawable/ic_keyboard_hide_36dp" />
 
             <ImageButton
                 android:id="@+id/btn_add"

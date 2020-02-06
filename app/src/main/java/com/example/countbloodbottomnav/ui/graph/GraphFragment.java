@@ -182,8 +182,8 @@ public class GraphFragment extends Fragment {
         fromDate = MA.graph.getStart();
         toDate = MA.graph.getEnd();
 
-        txt_fromDate.setText(MainActivity.datetime.format(MA.graph.getStart()));
-        txt_toDate.setText(MainActivity.datetime.format(MA.graph.getEnd()));
+        txt_fromDate.setText(MainActivity.date.format(MA.graph.getStart()));
+        txt_toDate.setText(MainActivity.date.format(MA.graph.getEnd()));
         sw_blood.setChecked(MA.graph.isBlood());
         sw_average.setChecked(MA.graph.isAverage());
         sw_short.setChecked(MA.graph.isFast());

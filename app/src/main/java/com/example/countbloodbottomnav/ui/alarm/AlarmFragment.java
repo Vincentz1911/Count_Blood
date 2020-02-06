@@ -55,7 +55,8 @@ public class AlarmFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alarm, container, false);
         MA = (MainActivity) getActivity();
-        cal.setTime(Objects.requireNonNull(MA).alarm.getDate());
+        assert MA != null;
+        cal.setTime(MA.alarm.getDate());
         initUI();
         initOnClick();
         return view;
@@ -128,7 +129,7 @@ public class AlarmFragment extends Fragment {
 
     private void updateAlarmView() {
         adapter.notifyDataSetChanged();
-        txt_dateAlarm.setText(MainActivity.datetime.format(MA.alarm.getDate()));
+        txt_dateAlarm.setText(MainActivity.date.format(MA.alarm.getDate()));
         txt_repeatAlarm.setText(txt_repeat[MA.alarm.getRepeat()]);
     }
 
