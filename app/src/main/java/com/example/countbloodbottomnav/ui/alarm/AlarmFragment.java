@@ -55,8 +55,7 @@ public class AlarmFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alarm, container, false);
         MA = (MainActivity) getActivity();
-        assert MA != null;
-        cal.setTime(MA.alarm.getDate());
+        if (MA != null) cal.setTime(MA.alarm.getDate());
         initUI();
         initOnClick();
         return view;
@@ -178,7 +177,8 @@ public class AlarmFragment extends Fragment {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),
                 alarm.getRequestCode(), alertIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getContext()).getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getContext())
+                .getSystemService(Context.ALARM_SERVICE);
 
         int[] repeat_int = {0, 5, 60, 180, 1440, 10080};
         if (alarmManager != null && alarm.getRepeat() > 0) {

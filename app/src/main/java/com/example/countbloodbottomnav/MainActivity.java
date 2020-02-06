@@ -76,11 +76,18 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_alarm,
                 R.id.navigation_settings,
                 R.id.navigation_email).build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
+
+        NavController navController = Navigation.findNavController(
+                this, R.id.nav_host_fragment);
+
+        NavigationUI.setupActionBarWithNavController(
+                this, navController, appBarConfig);
+
         NavigationUI.setupWithNavController(navView, navController);
 
-        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient));
+        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(
+                getResources().getDrawable(R.drawable.gradient));
+
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
             fullscreen(navView);
     }
@@ -110,7 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(
+                this, R.id.nav_host_fragment);
+
         switch (item.getItemId()) {
             case R.id.navigation_settings:
                 navController.navigate(R.id.navigation_settings);
@@ -120,23 +129,27 @@ public class MainActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) askPermissions();
                     navController.navigate(R.id.navigation_email);
                     return true;
-                } else toast("There is nothing to send");
+                } else toast("No data to send!");
         }
         return super.onOptionsItemSelected(item);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void askPermissions() {
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED)
             Log.v("", "Permission is granted");
         else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED)
             Log.v("", "Permission is granted");
         else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
     }
 
@@ -161,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
                 manager.createNotificationChannel(channel1);
                 manager.createNotificationChannel(channel2);
             }
-
         }
     }
 }

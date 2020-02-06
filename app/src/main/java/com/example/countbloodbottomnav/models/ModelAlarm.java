@@ -13,9 +13,9 @@ public class ModelAlarm implements Serializable {
         this.date = date;
     }
 
-    public ModelAlarm(String title, String message, int requestCode, Date date, int icon, int repeat) {
+    public ModelAlarm(String title, String msg, int requestCode, Date date, int icon, int repeat) {
         this.title = title;
-        this.message = message;
+        this.message = msg;
         this.requestCode = requestCode;
         this.date = date;
         this.icon = icon;
