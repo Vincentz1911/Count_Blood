@@ -1,11 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="imageButtonStyle">@style/AppTheme.imageButton</item>
-        <item name="buttonStyle">@style/AppTheme.button</item>
-        <item name="android:datePickerStyle">@style/customDateDialog</item>
+        <item name="actionButtonStyle">@style/AppTheme.button</item>
+        <item name="dialogTheme">@style/MyAppTheme</item>
 
     </style>
 
@@ -13,6 +13,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:drawablePadding">30dp</item>
     </style>
 
     <style name="AppTheme.button" parent="Widget.AppCompat.Button.Colored">
@@ -43,6 +44,14 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
+
+    <style name="MyAppTheme" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">#ff6d00</item>
+        <item name="colorControlActivated">#33691e</item>
+        <item name="android:selectableItemBackgroundBorderless" tools:targetApi="lollipop">@color/colorPrimaryDark</item>
+        <item name="dialogTheme">@style/Theme.AppCompat.DayNight.Dialog</item>
+        <item name="colorControlHighlight">#d50000</item>
+    </style>
 
     <!--    <style name="AppTheme." parent="DatePicker">-->
     <!--        <item name="android:textColor">#00FF00</item>-->

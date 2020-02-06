@@ -54,8 +54,7 @@ public class GraphFragment extends Fragment {
         initUI();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
             hideAndSeek();
-        if (MA.graph == null) today();
-        else updateView();
+        if (MA.graph == null) today(); else updateView();
         initOnClick();
         return view;
     }
@@ -121,7 +120,6 @@ public class GraphFragment extends Fragment {
         fromDate = cal.getTime();
         cal.add(Calendar.HOUR_OF_DAY, 24);
         toDate = cal.getTime();
-
         saveGraphSetup();
     }
 
@@ -163,7 +161,7 @@ public class GraphFragment extends Fragment {
         Calendar cal = Calendar.getInstance();
         DatePickerDialog dialog = new DatePickerDialog(
                 Objects.requireNonNull(getContext()),
-                R.style.customDateDialog,
+                R.style.MyAppTheme,
                 onDateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),

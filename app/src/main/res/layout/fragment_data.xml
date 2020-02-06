@@ -46,7 +46,7 @@
         <TextView
             android:id="@+id/txt_numSamples"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="@string/amount"
             android:theme="@style/whiteText" />
@@ -55,6 +55,7 @@
             android:id="@+id/btn_hide_home_input"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:padding="3dp"
             android:layout_weight="1"
             android:contentDescription="@string/todo"
             android:src="@drawable/ic_visibility_off_24dp" />
@@ -62,7 +63,7 @@
         <TextView
             android:id="@+id/txt_avgSamples"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="@string/average"
             android:theme="@style/whiteText" />
@@ -87,6 +88,7 @@
                 android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:checkedButton="@id/rb_blood"
                 tools:ignore="UselessParent">
 
                 <RadioButton
