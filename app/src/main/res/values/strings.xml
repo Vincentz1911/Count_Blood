@@ -29,17 +29,26 @@
     <string name="default_bloodsugar">Default Bloodsugar</string>
     <string name="default_email_reciever">Default Email Receiver</string>
     <string name="reciever_mail_com">receiver@mail.com</string>
+    <string name="hh_mm_ddd_dd_mmm">HH:MM DDD-DD-MMM</string>
+    <string name="next_alarm">NEXT ALARM: 00.00.00</string>
+    <string name="repeat_int">REPEAT INT</string>
+    <string name="dd_mm_yyyy">DD/MM-YYYY</string>
+    <string name="divider_time">:</string>
+    <string name="amount">Amount</string>
+    <string name="average">Average</string>
+    <string name="avg_symbol">X̄</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="quarter">Quarter</string>
+    <string name="year">Year</string>
 
 
-
-    <!--    <string name="average">Average : %.2f</string>-->
-
-    <!--    <string name="average">Average :</string>-->
-    <plurals name="samples" >
+    <plurals name="samples">
         <item quantity="other">Num: %d</item>
     </plurals>
 
-    <plurals name="average" >
+    <plurals name="average">
         <item quantity="other">Avg: %s</item>
     </plurals>
 

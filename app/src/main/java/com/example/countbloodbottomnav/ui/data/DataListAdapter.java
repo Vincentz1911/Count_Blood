@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.countbloodbottomnav.MainActivity;
 import com.example.countbloodbottomnav.R;
 import com.example.countbloodbottomnav.models.ModelData;
 
@@ -42,9 +43,7 @@ class DataListAdapter extends ArrayAdapter<ModelData> {
         ModelData data = list.get(position);
 
         TextView date = listItem.findViewById(R.id.txt_date);
-        Date listdate = data.getDate();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-        date.setText(formatter.format(listdate));
+        date.setText(MainActivity.datetime.format(data.getDate()));
 
         TextView sample = listItem.findViewById(R.id.txt_sample);
         //sample.setText(Float.toString(data.getAmount()));

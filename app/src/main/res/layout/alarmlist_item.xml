@@ -3,39 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/listImageRepeat"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-        <ImageView
-            android:id="@+id/listImageRepeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="TODO"
-            android:padding="10dp"
-            android:src="@drawable/ic_autorenew_36p" />
-        <TextView
-            android:id="@+id/txt_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="HH:MM DDD-DD-MMM"
-            android:textSize="24sp" />
-        <ImageView
-            android:id="@+id/listImage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="TODO"
-            android:src="@drawable/ic_blood_drop" />
-    </LinearLayout>
+        android:contentDescription="@string/todo"
+        android:src="@drawable/ic_autorenew_36p" />
+
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/hh_mm_ddd_dd_mmm"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/listImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/ic_blood_drop" />
 
     <LinearLayout
         android:id="@+id/lay_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:visibility="gone">
 
         <ImageButton
@@ -43,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_bg_selector"
-            android:padding="15dp"
+            android:contentDescription="@string/todo"
             android:src="@drawable/ic_edit_24dp" />
 
         <ImageButton
@@ -51,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_bg_selector"
-            android:padding="15dp"
+            android:contentDescription="@string/todo"
             android:src="@drawable/ic_delete_forever_24dp" />
     </LinearLayout>
 </LinearLayout>

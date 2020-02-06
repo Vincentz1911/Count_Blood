@@ -9,6 +9,8 @@ import android.content.Intent;
 
 import com.example.countbloodbottomnav.SplashActivity;
 
+import java.util.Objects;
+
 import static com.example.countbloodbottomnav.MainActivity.CHANNEL_1_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -27,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(intent.getIntExtra("RequestCode", 0), builder.build());
+        Objects.requireNonNull(manager).notify(intent.getIntExtra("RequestCode", 0), builder.build());
     }
 }
 

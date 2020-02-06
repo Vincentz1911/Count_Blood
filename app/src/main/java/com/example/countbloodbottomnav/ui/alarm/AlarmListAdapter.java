@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.countbloodbottomnav.MainActivity;
 import com.example.countbloodbottomnav.R;
 import com.example.countbloodbottomnav.models.ModelAlarm;
 
@@ -39,7 +40,7 @@ class AlarmListAdapter extends ArrayAdapter<ModelAlarm> {
         ModelAlarm alarm = list.get(position);
 
         ImageView imageRepeat = listItem.findViewById(R.id.listImageRepeat);
-        if (alarm.getRepeatInterval() == 0) {
+        if (alarm.getRepeat() == 0) {
             if (alarm.getDate().before(new Date()))
                 imageRepeat.setImageResource(R.drawable.ic_timer_off_36dp);
             else imageRepeat.setImageResource(R.drawable.ic_timer_36dp);
@@ -49,8 +50,7 @@ class AlarmListAdapter extends ArrayAdapter<ModelAlarm> {
         imageView.setImageResource(alarm.getIcon());
 
         TextView date = listItem.findViewById(R.id.txt_date);
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EEE d MMM");
-        date.setText(formatter.format(alarm.getDate()));
+        date.setText(MainActivity.datetime.format(alarm.getDate()));
 
         return listItem;
     }

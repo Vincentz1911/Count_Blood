@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
@@ -25,7 +24,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 import com.example.countbloodbottomnav.models.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,42 +36,48 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     public FileStorage IO;
-    public ModelGraph graph;
     public ModelSettings settings;
-    public ArrayList<ModelData> list;
-    public ArrayList<ModelAlarm> alarmlist;
-
-    private NavController navController;
-    private ActionBar sab;
+    public ModelGraph graph;
+    public ModelAlarm alarm;
+    public ArrayList<ModelAlarm> alarm_list;
+    public ArrayList<ModelData> data_list;
 
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
+    public static SimpleDateFormat datetime = new SimpleDateFormat("HH:mm EEE d MMM", Locale.getDefault());
+    public static SimpleDateFormat date = new SimpleDateFormat("EEE d MMM", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sab = getSupportActionBar();
-        setupNavBar();
-        createNotificationChannels();
-
-        IO = new FileStorage(getSharedPreferences("shared preferences", Context.MODE_PRIVATE));
-        list = IO.loadData();
-        settings = IO.loadSettings();
-        graph = IO.loadGraph();
-        alarmlist = IO.loadAlarms();
+        init();
     }
 
-    private void setupNavBar() {
+    private void init() {
+        createNavBar();
+        createNotificationChannels();
+        IO = new FileStorage(getSharedPreferences("storage", Context.MODE_PRIVATE));
+        settings = IO.loadSettings();
+        data_list = IO.loadData();
+        graph = IO.loadGraph();
+        alarm_list = IO.loadAlarms();
+        if (alarm == null) alarm = new ModelAlarm(new Date());
+    }
+
+    private void createNavBar() {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,
-                R.id.navigation_settings, R.id.navigation_send_mail).build();
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+                R.id.navigation_home,
+                R.id.navigation_dashboard,
+                R.id.navigation_notifications,
+                R.id.navigation_settings,
+                R.id.navigation_send_mail).build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
         NavigationUI.setupWithNavController(navView, navController);
 
-        sab.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient));
+        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient));
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
             fullscreen(navView);
     }
@@ -80,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        sab.hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         navView.setVisibility(View.GONE);
     }
 
@@ -98,17 +107,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         switch (item.getItemId()) {
             case R.id.navigation_settings:
                 navController.navigate(R.id.navigation_settings);
                 return true;
             case R.id.navigation_send_mail:
-                if (list.size() > 0) {
+                if (data_list.size() > 0) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) askPermissions();
                     navController.navigate(R.id.navigation_send_mail);
                     return true;
-                }
-                else toast("There is nothing to send");
+                } else toast("There is nothing to send");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -145,8 +154,11 @@ public class MainActivity extends AppCompatActivity {
             channel2.setDescription("This is Channel 2");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel1);
-            manager.createNotificationChannel(channel2);
+            if (manager != null) {
+                manager.createNotificationChannel(channel1);
+                manager.createNotificationChannel(channel2);
+            }
+
         }
     }
 }

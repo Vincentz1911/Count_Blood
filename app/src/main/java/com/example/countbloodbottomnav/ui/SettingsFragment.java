@@ -37,24 +37,9 @@ public class SettingsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         MA = ((MainActivity) getActivity());
         initUI();
-        btn_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveSettings();
-            }
-        });
-        btn_reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetList();
-            }
-        });
-        btn_generate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                generateList();
-            }
-        });
+        btn_save.setOnClickListener(v -> saveSettings());
+        btn_reset.setOnClickListener(v -> resetList());
+        btn_generate.setOnClickListener(v -> generateList());
         return view;
     }
 
@@ -122,17 +107,14 @@ public class SettingsFragment extends Fragment {
     private void resetList() {
         new AlertDialog.Builder(getActivity())
                 .setTitle("Delete All Blood samples")
-                .setMessage("Do you want to reset the list? This cannot be undone!")
+                .setMessage("Do you want to reset the data_list? This cannot be undone!")
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        MA.list = new ArrayList<>();
-                        MA.IO.saveData(MA.list);
-                        MA.toast("List have been reset");
-                    }
+                .setPositiveButton("Reset", (dialog, which) -> {
+                    MA.data_list = new ArrayList<>();
+                    MA.IO.saveData(MA.data_list);
+                    MA.toast("List have been reset");
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) { }})
+                .setNegativeButton("Cancel", (dialog, which) -> { })
                 .show();
     }
 
@@ -154,29 +136,29 @@ public class SettingsFragment extends Fragment {
                 c.set(Calendar.HOUR_OF_DAY, rnd.nextInt(24));
                 c.set(Calendar.MINUTE, rnd.nextInt(60));
                 c.set(Calendar.SECOND, rnd.nextInt(60));
-                MA.list.add(new ModelData(tr, c.getTime(), 0));
+                MA.data_list.add(new ModelData(tr, c.getTime(), 0));
             }
 
             //Fast-acting insulin
             c.set(Calendar.HOUR_OF_DAY, 7);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
+            MA.data_list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
             c.set(Calendar.HOUR_OF_DAY, 12);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
+            MA.data_list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
             c.set(Calendar.HOUR_OF_DAY, 18);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
+            MA.data_list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
 
             //Slow-acting insulin
             c.set(Calendar.HOUR_OF_DAY, 6);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.list.add(new ModelData(MA.settings.getLongTerm(), c.getTime(), 2));
+            MA.data_list.add(new ModelData(MA.settings.getLongTerm(), c.getTime(), 2));
             c.set(Calendar.HOUR_OF_DAY, 21);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.list.add(new ModelData(MA.settings.getLongTerm(), c.getTime(), 2));
+            MA.data_list.add(new ModelData(MA.settings.getLongTerm(), c.getTime(), 2));
         }
-        MA.IO.saveData(MA.list);
+        MA.IO.saveData(MA.data_list);
         MA.toast("Random Data have been generated");
     }
 }

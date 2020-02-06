@@ -38,12 +38,9 @@ public class SendMailFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_send_mail, container, false);
         MA = ((MainActivity) getActivity());
         initUI();
-        btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                writeCSV();
-                sendEmail();
-            }
+        btn_send.setOnClickListener(v -> {
+            writeCSV();
+            sendEmail();
         });
         return view;
     }
@@ -57,17 +54,17 @@ public class SendMailFragment extends Fragment {
     }
 
     private String mail() {
-        Date first = MA.list.get(0).getDate();
-        Date last = MA.list.get(MA.list.size() - 1).getDate();
+        Date first = MA.data_list.get(0).getDate();
+        Date last = MA.data_list.get(MA.data_list.size() - 1).getDate();
         return "I hereby send my diabetes data, ranging from " + first + " to " + last +
-                " with a total of " + MA.list.size() + " entries";
+                " with a total of " + MA.data_list.size() + " entries";
     }
 
     private void writeCSV() {
         String[] dataType = {"Bloodsugar", "FastInsulin", "SlowInsulin"};
         csvFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "DiabetesDataList.txt");
         try (PrintWriter csvWriter = new PrintWriter(new FileWriter(csvFile))) {
-            for (ModelData sample : MA.list)
+            for (ModelData sample : MA.data_list)
                 csvWriter.println(sample.getDate() + ", " + sample.getAmount() + ", " + dataType[sample.getType()]);
         } catch (IOException e) { e.printStackTrace(); }
     }

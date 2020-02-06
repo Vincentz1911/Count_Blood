@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,27 +16,30 @@
             android:id="@+id/btn_sortDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_sortValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
-    <!--    listview-->
+    <!--listview-->
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!--samples and average-->
+    <!--Divider-->
     <LinearLayout
         android:id="@+id/lay_hidebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="40dp"
         android:background="@drawable/gradient"
         android:orientation="horizontal">
 
@@ -44,28 +48,24 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"/>
+            android:text="@string/amount"
+            android:theme="@style/whiteText" />
 
         <ImageView
             android:id="@+id/btn_hide_home_input"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_visibility_off_24dp"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_visibility_off_24dp" />
 
         <TextView
             android:id="@+id/txt_avgSamples"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
+            android:text="@string/average"
+            android:theme="@style/whiteText" />
     </LinearLayout>
 
     <!--add new test result-->
@@ -86,19 +86,23 @@
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                tools:ignore="UselessParent">
+
                 <RadioButton
                     android:id="@+id/rb_blood"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:drawableEnd="@drawable/ic_blood_drop" />
+
                 <RadioButton
                     android:id="@+id/rb_fast"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:drawableEnd="@drawable/ic_rabbit" />
+
                 <RadioButton
                     android:id="@+id/rb_slow"
                     android:layout_width="wrap_content"
@@ -112,8 +116,8 @@
             android:id="@+id/np1_home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:fadingEdgeLength="20000dp"
             android:layout_weight="2"
+            android:fadingEdgeLength="20000dp"
             android:theme="@style/NumberPickerText" />
 
         <TextView
@@ -134,23 +138,21 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/btn_numpad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:background="@drawable/btn_bg_selector"
-                android:src="@drawable/ic_keyboard_36dp"
-                android:contentDescription="@string/todo" />
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_keyboard_36dp" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/add" />
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_add_36dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

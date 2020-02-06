@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,8 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class GraphFragment extends Fragment {
@@ -46,7 +45,6 @@ public class GraphFragment extends Fragment {
     //endregion
     private MainActivity MA;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
-    private DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     private Date fromDate, toDate;
     private boolean isFromDate = true;
 
@@ -83,73 +81,34 @@ public class GraphFragment extends Fragment {
 
     private void initOnClick() {
 
-        btn_fromDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isFromDate = true;
-                createDatePicker();
-            }
+        btn_fromDate.setOnClickListener(v -> {
+            isFromDate = true;
+            createDatePicker();
         });
 
-        btn_toDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isFromDate = false;
-                createDatePicker();
-            }
+        btn_toDate.setOnClickListener(v -> {
+            isFromDate = false;
+            createDatePicker();
         });
 
-        btn_frombk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToDate(-1, true);
-            }
-        });
-        btn_fromfw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToDate(1, true);
-            }
-        });
-        btn_tobk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToDate(-1, false);
-            }
-        });
-        btn_tofw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToDate(1, false);
-            }
-        });
+        btn_frombk.setOnClickListener(v -> addToDate(-1, true));
+        btn_fromfw.setOnClickListener(v -> addToDate(1, true));
+        btn_tobk.setOnClickListener(v -> addToDate(-1, false));
+        btn_tofw.setOnClickListener(v -> addToDate(1, false));
 
-        rg_timeframe.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                saveGraphSetup();
-            }
-        });
+        rg_timeframe.setOnCheckedChangeListener((group, checkedId) -> saveGraphSetup());
 
-        btn_hide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideAndSeek();
-            }
-        });
+        btn_hide.setOnClickListener(v -> hideAndSeek());
 
-        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int y, int m, int d) {
-                Calendar cal = Calendar.getInstance();
-                cal.set(y, m, d, 0, 0, 0);
-                if (isFromDate) fromDate = cal.getTime();
-                else {
-                    cal.add(Calendar.HOUR_OF_DAY, 24);
-                    toDate = cal.getTime();
-                }
-                saveGraphSetup();
+        onDateSetListener = (view, y, m, d) -> {
+            Calendar cal = Calendar.getInstance();
+            cal.set(y, m, d, 0, 0, 0);
+            if (isFromDate) fromDate = cal.getTime();
+            else {
+                cal.add(Calendar.HOUR_OF_DAY, 24);
+                toDate = cal.getTime();
             }
+            saveGraphSetup();
         };
     }
 
@@ -210,8 +169,6 @@ public class GraphFragment extends Fragment {
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH));
         dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-
-        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.RED)));
         dialog.show();
     }
 
@@ -225,8 +182,8 @@ public class GraphFragment extends Fragment {
         fromDate = MA.graph.getStart();
         toDate = MA.graph.getEnd();
 
-        txt_fromDate.setText(formatter.format(MA.graph.getStart()));
-        txt_toDate.setText(formatter.format(MA.graph.getEnd()));
+        txt_fromDate.setText(MainActivity.datetime.format(MA.graph.getStart()));
+        txt_toDate.setText(MainActivity.datetime.format(MA.graph.getEnd()));
         sw_blood.setChecked(MA.graph.isBlood());
         sw_average.setChecked(MA.graph.isAverage());
         sw_short.setChecked(MA.graph.isFast());
@@ -281,7 +238,7 @@ public class GraphFragment extends Fragment {
         ArrayList<ModelGraphData> list = new ArrayList<>();
 
         //Compares dates to get correct data from date interval
-        for (ModelData data : MA.list) {
+        for (ModelData data : MA.data_list) {
             if (data.getDate().compareTo(fromDate) > 0 && data.getDate().compareTo(toDate) < 0) {
 
                 //sets time of day (tod)
@@ -298,7 +255,7 @@ public class GraphFragment extends Fragment {
                 else if (days == 91) x = (((cal.get(Calendar.DAY_OF_YEAR) - 1) % 91) / 91f);
                 else if (days == 365) x = ((cal.get(Calendar.DAY_OF_YEAR) - 1 + tod) / 365f);
 
-                //Adds data to list if checked and correct type
+                //Adds data to data_list if checked and correct type
                 if (sw_blood.isChecked() && data.getType() == 0)
                     list.add(new ModelGraphData(x, data.getAmount(), data.getType()));
                 if (sw_short.isChecked() && data.getType() == 1)
@@ -308,10 +265,8 @@ public class GraphFragment extends Fragment {
             }
         }
 
-        //Sorts list so draw insulin first and blood on top
-        Collections.sort(list, new Comparator<ModelGraphData>() {
-            public int compare(ModelGraphData obj1, ModelGraphData obj2) {
-                return Integer.compare(obj2.getP(), obj1.getP()); }});
+        //Sorts data_list so draw insulin first and blood on top
+        Collections.sort(list, (obj1, obj2) -> Integer.compare(obj2.getP(), obj1.getP()));
 
         return list;
     }

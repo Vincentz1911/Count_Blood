@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,14 +17,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/reset_list" />
+            android:text="@string/reset_list"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_generatelist"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/generate_list" />
+            android:text="@string/generate_list"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <!--        TOP-->
@@ -59,7 +62,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_bg_selector"
-            android:src="@drawable/ic_save_black_24dp"
+            android:src="@drawable/ic_save_36dp"
             android:contentDescription="@string/todo" />
 
     </LinearLayout>

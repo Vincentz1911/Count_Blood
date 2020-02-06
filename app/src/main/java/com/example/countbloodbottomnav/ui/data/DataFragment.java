@@ -2,14 +2,12 @@ package com.example.countbloodbottomnav.ui.data;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,22 +30,22 @@ import com.example.countbloodbottomnav.R;
 
 import java.text.DecimalFormat;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.Objects;
 
 public class DataFragment extends Fragment {
 
     //region UI
     private View view;
+    private LinearLayout lay_bottom;
     private ListView listView;
-    private ArrayAdapter<ModelData> adapter;
+    private TextView txt_bsAmount, txt_bsAverage;
+    private ImageView btn_hide;
+    private ImageButton btn_numpad, btn_addNew;
+    private Button btn_sortDate, btn_sortValue;
     private NumberPicker np1, np2;
     private RadioGroup radioGroup;
-    private TextView txt_bsAmount, txt_bsAverage;
-    private Button btn_addNew, btn_sortDate, btn_sortValue;
-    private ImageButton btn_numpad;
-    private ImageView btn_hide;
-    private LinearLayout lay_bottom;
+    private ArrayAdapter<ModelData> adapter;
     //endregion
     private MainActivity MA;
     private int dataType = 0;
@@ -58,15 +56,21 @@ public class DataFragment extends Fragment {
         MA = (MainActivity) getActivity();
         initUI();
         initOnClick();
-        updateInfo();
-        sortByDate();
         return view;
     }
 
     private void initUI() {
         lay_bottom = view.findViewById(R.id.lay_addData);
+        btn_addNew = view.findViewById(R.id.btn_add);
+        btn_numpad = view.findViewById(R.id.btn_numpad);
+        btn_hide = view.findViewById(R.id.btn_hide_home_input);
+        btn_sortDate = view.findViewById(R.id.btn_sortDate);
+        btn_sortValue = view.findViewById(R.id.btn_sortValue);
+        txt_bsAmount = view.findViewById(R.id.txt_numSamples);
+        txt_bsAverage = view.findViewById(R.id.txt_avgSamples);
+        radioGroup = view.findViewById(R.id.radioGroup);
 
-        adapter = new DataListAdapter(getContext(), MA.list, MA.settings.getHighBS(), MA.settings.getLowBS());
+        adapter = new DataListAdapter(Objects.requireNonNull(getContext()), MA.data_list, MA.settings.getHighBS(), MA.settings.getLowBS());
         listView = view.findViewById(R.id.listView);
         listView.setAdapter(adapter);
 
@@ -80,71 +84,48 @@ public class DataFragment extends Fragment {
         np2.setMinValue(0);
         np2.setValue(0);
 
-        btn_addNew = view.findViewById(R.id.btn_add);
-        btn_numpad = view.findViewById(R.id.btn_numpad);
-        btn_hide = view.findViewById(R.id.btn_hide_home_input);
-        btn_sortDate = view.findViewById(R.id.btn_sortDate);
-        btn_sortValue = view.findViewById(R.id.btn_sortValue);
-
-        radioGroup = view.findViewById(R.id.radioGroup);
-        txt_bsAmount = view.findViewById(R.id.txt_numSamples);
-        txt_bsAverage = view.findViewById(R.id.txt_avgSamples);
+        updateInfo();
+        sortByDate();
     }
 
     private void initOnClick() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { deleteSample(position); }});
+        listView.setOnItemClickListener((parent, view, position, id) -> deleteSample(position));
 
-        btn_sortDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { sortByDate(); }});
+        btn_sortDate.setOnClickListener(v -> sortByDate());
 
-        btn_sortValue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { sortBySample(); }});
+        btn_sortValue.setOnClickListener(v -> sortBySample());
 
-        btn_addNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { addNewSample((np1.getValue() + np2.getValue() / 10f), dataType); }
-        });
+        btn_addNew.setOnClickListener(v -> addNewSample((np1.getValue() + np2.getValue() / 10f), dataType));
 
-        btn_numpad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { numPadSample(dataType); }});
+        btn_numpad.setOnClickListener(v -> numPadSample(dataType));
 
-        btn_hide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (lay_bottom.getVisibility() == View.GONE) {
-                    lay_bottom.setVisibility(View.VISIBLE);
-                    btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
-                            R.drawable.ic_visibility_off_24dp, null));
-                } else {
-                    lay_bottom.setVisibility(View.GONE);
-                    btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
-                            R.drawable.ic_visibility_24dp, null));
-                }
+        btn_hide.setOnClickListener(v -> {
+            if (lay_bottom.getVisibility() == View.GONE) {
+                lay_bottom.setVisibility(View.VISIBLE);
+                btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
+                        R.drawable.ic_visibility_off_24dp, null));
+            } else {
+                lay_bottom.setVisibility(View.GONE);
+                btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
+                        R.drawable.ic_visibility_24dp, null));
             }
         });
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                np2.setValue(0);
-                switch (checkedId) {
-                    case R.id.rb_blood:
-                        dataType = 0;
-                        np1.setValue((int) MA.settings.getDefaultBS());
-                        break;
-                    case R.id.rb_fast:
-                        dataType = 1;
-                        np1.setValue(MA.settings.getFast());
-                        break;
-                    case R.id.rb_slow:
-                        dataType = 2;
-                        np1.setValue(MA.settings.getLongTerm());
-                        break;
-                }
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            np2.setValue(0);
+            switch (checkedId) {
+                case R.id.rb_blood:
+                    dataType = 0;
+                    np1.setValue((int) MA.settings.getDefaultBS());
+                    break;
+                case R.id.rb_fast:
+                    dataType = 1;
+                    np1.setValue(MA.settings.getFast());
+                    break;
+                case R.id.rb_slow:
+                    dataType = 2;
+                    np1.setValue(MA.settings.getLongTerm());
+                    break;
             }
         });
     }
@@ -153,7 +134,7 @@ public class DataFragment extends Fragment {
         adapter.notifyDataSetChanged();
         float amount = 0;
         int total = 0;
-        for (ModelData sample : MA.list) {
+        for (ModelData sample : MA.data_list) {
             if (sample.getType() == 0) {
                 amount += sample.getAmount();
                 total++;
@@ -162,14 +143,14 @@ public class DataFragment extends Fragment {
         float avg = amount / total;
         txt_bsAmount.setText(getResources().getQuantityString(R.plurals.samples, total, total));
         txt_bsAverage.setText(getResources().getQuantityString(R.plurals.average,
-                (int)avg, new DecimalFormat("#.##").format(avg)));
+                (int) avg, new DecimalFormat("#.##").format(avg)));
     }
 
     private void addNewSample(float value, int type) {
-        MA.list.add(new ModelData(value, new Date(), type));
+        MA.data_list.add(new ModelData(value, new Date(), type));
         isSortedDate = false;
         sortByDate();
-        MA.IO.saveData(MA.list);
+        MA.IO.saveData(MA.data_list);
         MA.toast("New data added");
         updateInfo();
     }
@@ -180,16 +161,12 @@ public class DataFragment extends Fragment {
                 .setTitle("Delete Blood Measurement")
                 .setMessage("Do you want to delete " + data.getDate() + " " + data.getAmount())
                 //.setIcon(R.drawable.ic_action_bluetooth_connected)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        MA.list.remove(position);
-                        MA.IO.saveData(MA.list);
-                        updateInfo();
-                    }
+                .setPositiveButton("OK", (dialog, which) -> {
+                    MA.data_list.remove(position);
+                    MA.IO.saveData(MA.data_list);
+                    updateInfo();
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                .setNegativeButton("Cancel", (dialog, which) -> {
                 }).show();
     }
 
@@ -217,25 +194,19 @@ public class DataFragment extends Fragment {
                 .setMessage("Type in the amount:")
                 .setView(input)
                 .setIcon(icon)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String s = input.getText().toString().replace(",", ".");
-                        try {
-                            addNewSample(Float.parseFloat(s), typeOfSample);
-                            closeKeyboard();
-                        } catch (NumberFormatException e) {
-                            input.setText("");
-                            closeKeyboard();
-                        }
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("Add", (dialog12, which) -> {
+                    String s = input.getText().toString().replace(",", ".");
+                    try {
+                        addNewSample(Float.parseFloat(s), typeOfSample);
+                        closeKeyboard();
+                    } catch (NumberFormatException e) {
+                        input.setText("");
                         closeKeyboard();
                     }
-                }).show();
+                })
+                .setNegativeButton("Cancel", (dialog1, which) -> closeKeyboard()).show();
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setBackground(ContextCompat.getDrawable(
-                getContext(), R.drawable.btn_bg_selector));
+                Objects.requireNonNull(getContext()), R.drawable.btn_bg_selector));
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackground(ContextCompat.getDrawable(
                 getContext(), R.drawable.btn_bg_selector));
         //dialog.show();
@@ -243,12 +214,12 @@ public class DataFragment extends Fragment {
 
     private void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) MA.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        Objects.requireNonNull(imm).toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void closeKeyboard() {
         InputMethodManager imm = (InputMethodManager) MA.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        Objects.requireNonNull(imm).toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     private void sortByDate() {
@@ -256,20 +227,12 @@ public class DataFragment extends Fragment {
             isSortedDate = false;
             btn_sortDate.setText(R.string.date_sort_up);
             btn_sortValue.setText(R.string.value);
-            Collections.sort(MA.list, new Comparator<ModelData>() {
-                public int compare(ModelData obj1, ModelData obj2) {
-                    return obj1.getDate().compareTo(obj2.getDate());
-                }
-            });
+            Collections.sort(MA.data_list, (obj1, obj2) -> obj1.getDate().compareTo(obj2.getDate()));
         } else {
             isSortedDate = true;
             btn_sortDate.setText(R.string.date_sort_down);
             btn_sortValue.setText(R.string.value);
-            Collections.sort(MA.list, new Comparator<ModelData>() {
-                public int compare(ModelData obj1, ModelData obj2) {
-                    return obj2.getDate().compareTo(obj1.getDate());
-                }
-            });
+            Collections.sort(MA.data_list, (obj1, obj2) -> obj2.getDate().compareTo(obj1.getDate()));
         }
         adapter.notifyDataSetChanged();
     }
@@ -279,20 +242,12 @@ public class DataFragment extends Fragment {
             isSortedValue = true;
             btn_sortDate.setText(R.string.date);
             btn_sortValue.setText(R.string.value_sort_down);
-            Collections.sort(MA.list, new Comparator<ModelData>() {
-                public int compare(ModelData obj1, ModelData obj2) {
-                    return Float.compare(obj2.getAmount(), obj1.getAmount());
-                }
-            });
+            Collections.sort(MA.data_list, (obj1, obj2) -> Float.compare(obj2.getAmount(), obj1.getAmount()));
         } else {
             isSortedValue = false;
             btn_sortDate.setText(R.string.date);
             btn_sortValue.setText(R.string.value_sort_up);
-            Collections.sort(MA.list, new Comparator<ModelData>() {
-                public int compare(ModelData obj1, ModelData obj2) {
-                    return Float.compare(obj1.getAmount(), obj2.getAmount());
-                }
-            });
+            Collections.sort(MA.data_list, (obj1, obj2) -> Float.compare(obj1.getAmount(), obj2.getAmount()));
         }
         adapter.notifyDataSetChanged();
     }

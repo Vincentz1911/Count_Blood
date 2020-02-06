@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,7 +9,7 @@
         android:id="@+id/txt_nextalarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NEXT ALARM: 00.00.00" />
+        android:text="@string/next_alarm" />
 
     <ListView
         android:id="@+id/listview_alarm"
@@ -22,40 +23,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient"
+        android:minHeight="40dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/ic_repeat"
+        <TextView
+            android:id="@+id/txt_repeat_alarm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_autorenew_24dp" />
-
-        <Spinner
-            android:id="@+id/spn_repeat"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5" />
+            android:layout_weight="3"
+            android:drawableStart="@drawable/ic_repeat_36dp"
+            android:text="@string/repeat_int"
+            android:theme="@style/whiteText" />
 
         <ImageView
             android:id="@+id/btn_hide_alarm_input"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/todo"
             android:src="@drawable/ic_visibility_off_24dp" />
 
         <TextView
+            android:id="@+id/txt_date_alarm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:text="hh:mm dd/mm"
-            android:textSize="18sp"
-            android:textColor="@color/colorWhite" />
+            android:layout_weight="3"
+            android:drawableEnd="@drawable/ic_date_event_36dp"
+            android:text="@string/dd_mm_yyyy"
+            android:theme="@style/whiteText" />
 
     </LinearLayout>
 
@@ -66,7 +62,7 @@
         android:minHeight="200dp"
         android:orientation="horizontal">
 
-<!--RADIOGROUP-->
+        <!--RADIOGROUP-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -77,7 +73,8 @@
                 android:id="@+id/rg_alarmtype"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:checkedButton="@+id/alarm_bloodSample">
+                android:checkedButton="@+id/alarm_bloodSample"
+                tools:ignore="UselessParent">
 
                 <RadioButton
                     android:id="@+id/alarm_bloodSample"
@@ -105,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_notifications_black_24dp" />
+                    android:drawableStart="@drawable/ic_notifications" />
             </RadioGroup>
         </LinearLayout>
 
@@ -116,6 +113,13 @@
             android:layout_weight="1"
             android:theme="@style/NumberPickerText" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/divider_time"
+            android:textSize="32sp" />
+
         <NumberPicker
             android:id="@+id/alarm_minutes"
             android:layout_width="0dp"
@@ -123,7 +127,7 @@
             android:layout_weight="1"
             android:theme="@style/NumberPickerText" />
 
-<!--        BUTTONS-->
+        <!--        BUTTONS-->
         <LinearLayout
             android:id="@+id/lay_repeating"
             android:layout_width="0dp"
@@ -135,17 +139,23 @@
                 android:id="@+id/btn_setdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:background="@drawable/btn_bg_selector"
-                android:src="@drawable/ic_event_36dp" />
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_date_event_36dp" />
 
-            <Button
+            <ImageButton
+                android:id="@+id/btn_setrepeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_repeat_36dp" />
+
+            <ImageButton
                 android:id="@+id/btn_setalarm"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_bg_selector"
-                android:text="Set" />
+                android:layout_height="match_parent"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_add_36dp" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
