@@ -4,7 +4,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="imageButtonStyle">@style/AppTheme.imageButton</item>
-        <item name="borderlessButtonStyle">AppTheme.buttonBorderlessColored</item>
+        <item name="borderlessButtonStyle">@style/AppTheme.buttonBorderlessColored</item>
     </style>
 
 <!--    <style name="AppTheme" parent="Theme.AppCompat.Light">-->

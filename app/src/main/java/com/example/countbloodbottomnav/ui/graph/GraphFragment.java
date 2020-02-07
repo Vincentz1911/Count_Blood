@@ -48,7 +48,6 @@ public class GraphFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_graph, container, false);
         MA = (MainActivity) getActivity();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) hideAndSeek();
         initUI();
         if (MA.graph == null) today(); else updateView();
         initOnClick();
@@ -73,6 +72,8 @@ public class GraphFragment extends Fragment {
         sw_long = view.findViewById(R.id.switch_longterm);
         rg_timeframe = view.findViewById(R.id.rg_timeframe);
 
+        if (getResources().getConfiguration().orientation ==
+                Configuration.ORIENTATION_LANDSCAPE) hideAndSeek();
     }
 
     private void initOnClick() {
@@ -111,6 +112,7 @@ public class GraphFragment extends Fragment {
     }
 
     private void today() {
+        MA.graph = new ModelGraph();
         cal.setTime(new Date());
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
