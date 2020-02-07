@@ -54,6 +54,10 @@ public class GraphFragment extends Fragment {
         return view;
     }
 
+    //TODO Check for dates not crossing eachother in fromDate and toDate in picker and with buttons
+//TODO onclick listener on switch buttons
+    //TODO Fix date buttons
+
     private void initUI() {
         lay_bottom = view.findViewById(R.id.layout_controls);
         lay_graph = view.findViewById(R.id.layout_graph);

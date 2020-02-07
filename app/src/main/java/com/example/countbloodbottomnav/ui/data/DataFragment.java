@@ -20,7 +20,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
@@ -47,6 +46,7 @@ public class DataFragment extends Fragment {
     private ArrayAdapter<ModelData> adapter_data;
     //endregion
     private MainActivity MA;
+    private int[] rb_icon = {R.drawable.ic_blood_drop, R.drawable.ic_rabbit, R.drawable.ic_turtle};
     private boolean isSortedDate = false, isSortedValue = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +54,11 @@ public class DataFragment extends Fragment {
         MA = (MainActivity) getActivity();
         initUI();
         initOnClick();
+        if (MA.data == null) MA.data = new ModelData(rg_dataType.getCheckedRadioButtonId());
         return view;
     }
+
+    //TODO Make EDIT/DELETE/MESSAGE on ListItems
 
     private void initUI() {
         lay_bottom = view.findViewById(R.id.lay_addData);
@@ -68,7 +71,8 @@ public class DataFragment extends Fragment {
         txt_bsAverage = view.findViewById(R.id.txt_avgSamples);
         rg_dataType = view.findViewById(R.id.radioGroup);
 
-        adapter_data = new DataListAdapter(Objects.requireNonNull(getContext()), MA.data_list, MA.settings.getHighBS(), MA.settings.getLowBS());
+        adapter_data = new DataListAdapter(Objects.requireNonNull(getContext()),
+                MA.data_list, MA.settings.getHighBS(), MA.settings.getLowBS());
         listView = view.findViewById(R.id.listView);
         listView.setAdapter(adapter_data);
 
@@ -88,35 +92,43 @@ public class DataFragment extends Fragment {
 
     private void initOnClick() {
         listView.setOnItemClickListener((parent, view, position, id) -> deleteSample(position));
-
-        btn_sortDate.setOnClickListener(v -> sortByDate());
-
-        btn_sortValue.setOnClickListener(v -> sortBySample());
-
         btn_addNew.setOnClickListener(v -> addNewSample((np1.getValue() + np2.getValue() / 10f)));
-
         btn_numpad.setOnClickListener(v -> numPadSample());
-
-        btn_hide.setOnClickListener(v -> {
-            if (lay_bottom.getVisibility() == View.GONE) {
-                lay_bottom.setVisibility(View.VISIBLE);
-                btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
-                        R.drawable.ic_visibility_off_24dp, null));
-            } else {
-                lay_bottom.setVisibility(View.GONE);
-                btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
-                        R.drawable.ic_visibility_24dp, null));
-            }
-        });
+        btn_sortDate.setOnClickListener(v -> sortByDate());
+        btn_sortValue.setOnClickListener(v -> sortBySample());
+        btn_hide.setOnClickListener(v -> hideAndSeek());
 
         rg_dataType.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId) {
-                case R.id.rb_blood: np1.setValue((int) MA.settings.getDefaultBS()); break;
-                case R.id.rb_fast: np1.setValue(MA.settings.getFast()); break;
-                case R.id.rb_slow: np1.setValue(MA.settings.getLongTerm()); break;
-            }
+            if (type() == 0) np1.setValue((int) MA.settings.getDefaultBS());
+            else if (type() == 1) np1.setValue(MA.settings.getFast());
+            else np1.setValue(MA.settings.getLongTerm());
             np2.setValue(0);
         });
+    }
+
+    private int type() {
+        switch (rg_dataType.getCheckedRadioButtonId()) {
+            case R.id.rb_blood:
+                return 0;
+            case R.id.rb_fast:
+                return 1;
+            case R.id.rb_slow:
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    private void hideAndSeek() {
+        if (lay_bottom.getVisibility() == View.GONE) {
+            lay_bottom.setVisibility(View.VISIBLE);
+            btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
+                    R.drawable.ic_visibility_off_24dp, null));
+        } else {
+            lay_bottom.setVisibility(View.GONE);
+            btn_hide.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
+                    R.drawable.ic_visibility_24dp, null));
+        }
     }
 
     private void updateView() {
@@ -134,11 +146,7 @@ public class DataFragment extends Fragment {
     }
 
     private void addNewSample(float value) {
-        switch (rg_dataType.getCheckedRadioButtonId()) {
-            case R.id.rb_blood: MA.data_list.add(new ModelData(value, new Date(), 0)); break;
-            case R.id.rb_fast: MA.data_list.add(new ModelData(value, new Date(), 1)); break;
-            case R.id.rb_slow: MA.data_list.add(new ModelData(value, new Date(), 2)); break;
-        }
+        MA.data_list.add(new ModelData(value, new Date(), type()));
         isSortedDate = false;
         sortByDate();
         MA.IO.saveData(MA.data_list);
@@ -151,44 +159,40 @@ public class DataFragment extends Fragment {
         new AlertDialog.Builder(getActivity())
                 .setTitle("Delete Blood Measurement")
                 .setMessage("Do you want to delete " + data.getDate() + " " + data.getAmount())
-                //.setIcon(R.drawable.ic_action_bluetooth_connected)
+                .setIcon(rb_icon[data.getType()])
                 .setPositiveButton("OK", (dialog, which) -> {
                     MA.data_list.remove(position);
                     MA.IO.saveData(MA.data_list);
                     updateView();
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                }).show();
+                }).setNegativeButton("Cancel", (dialog, which) -> {
+        }).show();
     }
 
     private void numPadSample() {
         showKeyboard();
+
         final EditText input = new EditText(getContext());
         input.setRawInputType(InputType.TYPE_CLASS_NUMBER);
         input.setSingleLine();
         input.requestFocus();
 
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
+        new AlertDialog.Builder(getContext())
                 .setTitle("Input Sample")
-                .setMessage("Type in the amount:")
+                .setMessage("type in the amount:")
                 .setView(input)
-                .setIcon((int)rg_dataType.getCheckedRadioButtonId())
+                .setIcon(rb_icon[type()])
                 .setPositiveButton("Add", (dialog12, which) -> {
                     String s = input.getText().toString().replace(",", ".");
                     try {
                         addNewSample(Float.parseFloat(s));
                         closeKeyboard();
                     } catch (NumberFormatException e) {
-                        input.setText("");
+                        MA.toast("Number not recognized. Try again");
                         closeKeyboard();
                     }
                 })
-                .setNegativeButton("Cancel", (dialog1, which) -> closeKeyboard()).show();
-
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setBackground(ContextCompat.getDrawable(
-                Objects.requireNonNull(getContext()), R.drawable.btn_bg_selector));
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackground(ContextCompat.getDrawable(
-                getContext(), R.drawable.btn_bg_selector));
+                .setNegativeButton("Cancel", (dialog1, which) -> closeKeyboard())
+                .show();
     }
 
     private void showKeyboard() {
@@ -206,12 +210,14 @@ public class DataFragment extends Fragment {
             isSortedDate = false;
             btn_sortDate.setText(R.string.date_sort_up);
             btn_sortValue.setText(R.string.value);
-            Collections.sort(MA.data_list, (obj1, obj2) -> obj1.getDate().compareTo(obj2.getDate()));
+            Collections.sort(MA.data_list, (obj1, obj2) ->
+                    obj1.getDate().compareTo(obj2.getDate()));
         } else {
             isSortedDate = true;
             btn_sortDate.setText(R.string.date_sort_down);
             btn_sortValue.setText(R.string.value);
-            Collections.sort(MA.data_list, (obj1, obj2) -> obj2.getDate().compareTo(obj1.getDate()));
+            Collections.sort(MA.data_list, (obj1, obj2) ->
+                    obj2.getDate().compareTo(obj1.getDate()));
         }
         adapter_data.notifyDataSetChanged();
     }
@@ -221,12 +227,14 @@ public class DataFragment extends Fragment {
             isSortedValue = true;
             btn_sortDate.setText(R.string.date);
             btn_sortValue.setText(R.string.value_sort_down);
-            Collections.sort(MA.data_list, (obj1, obj2) -> Float.compare(obj2.getAmount(), obj1.getAmount()));
+            Collections.sort(MA.data_list, (obj1, obj2) ->
+                    Float.compare(obj2.getAmount(), obj1.getAmount()));
         } else {
             isSortedValue = false;
             btn_sortDate.setText(R.string.date);
             btn_sortValue.setText(R.string.value_sort_up);
-            Collections.sort(MA.data_list, (obj1, obj2) -> Float.compare(obj1.getAmount(), obj2.getAmount()));
+            Collections.sort(MA.data_list, (obj1, obj2) ->
+                    Float.compare(obj1.getAmount(), obj2.getAmount()));
         }
         adapter_data.notifyDataSetChanged();
     }

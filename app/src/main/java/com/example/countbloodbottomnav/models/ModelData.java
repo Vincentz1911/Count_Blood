@@ -7,6 +7,7 @@ public class ModelData {
     private Date date;
     private int type;
 
+    public ModelData(int type){ }
     public ModelData(float amount, Date date, int type) {
         this.amount = amount;
         this.date = date;

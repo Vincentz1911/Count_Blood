@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,8 +25,6 @@ import com.example.countbloodbottomnav.MainActivity;
 import com.example.countbloodbottomnav.R;
 import com.example.countbloodbottomnav.models.ModelAlarm;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -69,13 +65,13 @@ public class AlarmFragment extends Fragment {
         np_hour.setMaxValue(23);
         np_hour.setMinValue(0);
         np_hour.setValue(cal.get(Calendar.HOUR_OF_DAY));
-        np_hour.setFormatter((int value) -> String.format(Locale.getDefault(),"%02d", value));
+        np_hour.setFormatter((int value) -> String.format(Locale.getDefault(), "%02d", value));
 
         np_minute = view.findViewById(R.id.alarm_minutes);
         np_minute.setMaxValue(59);
         np_minute.setMinValue(0);
         np_minute.setValue(cal.get(Calendar.MINUTE));
-        np_minute.setFormatter((int value) -> String.format(Locale.getDefault(),"%02d", value));
+        np_minute.setFormatter((int value) -> String.format(Locale.getDefault(), "%02d", value));
 
         lay_bottom = view.findViewById(R.id.lay_bottom);
         btn_hide = view.findViewById(R.id.btn_hide_alarm_input);

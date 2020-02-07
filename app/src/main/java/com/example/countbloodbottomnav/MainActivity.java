@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,7 +28,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -39,15 +40,23 @@ public class MainActivity extends AppCompatActivity {
     public ModelSettings settings;
     public ModelGraph graph;
     public ModelAlarm alarm;
+    public ModelData data;
     public ArrayList<ModelAlarm> alarm_list;
     public ArrayList<ModelData> data_list;
 
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
 
-    public static SimpleDateFormat datetime = new SimpleDateFormat("HH:mm EEE d MMM", Locale.getDefault());
-    public static SimpleDateFormat date = new SimpleDateFormat("EEE d MMM", Locale.getDefault());
-    public String f2str(float f) {return String.format(Locale.getDefault(), "%.02f", (float)f);}
+    public static SimpleDateFormat datetime = new SimpleDateFormat
+            ("HH:mm EEE d. MMM", Locale.getDefault());
+    public static SimpleDateFormat date = new SimpleDateFormat
+            ("EEE d. MMM", Locale.getDefault());
+
+    public String f2str(float f) {
+        return String.format(Locale.getDefault(), "%.02f", (float) f); }
+
+    public Drawable drawable() {
+        return ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_blood_drop); }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         data_list = IO.loadData();
         graph = IO.loadGraph();
         alarm_list = IO.loadAlarms();
-
     }
 
     private void createNavBar() {

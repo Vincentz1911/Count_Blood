@@ -20,12 +20,9 @@
     <!--    DIVIDER-->
     <LinearLayout
         android:id="@+id/lay_hidebar"
+        style="@style/DividerBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="0dp"

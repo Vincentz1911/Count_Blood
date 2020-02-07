@@ -45,6 +45,8 @@ public class EmailFragment extends Fragment {
         return view;
     }
 
+    //TODO Make date ranges in email sending
+
     private void initUI() {
         btn_send = view.findViewById(R.id.btn_send_mail);
         input_mail = view.findViewById(R.id.input_mail);
