@@ -4,7 +4,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="imageButtonStyle">@style/AppTheme.imageButton</item>
-        <item name="borderlessButtonStyle">@style/AppTheme.buttonBorderlessColored</item>
     </style>
 
 <!--    <style name="AppTheme" parent="Theme.AppCompat.Light">-->
@@ -16,7 +15,7 @@
 <!--        <item name="colorButtonNormal">@style/AppTheme.buttonColored</item>-->
 <!--        <item name="colorControlNormal">@color/colorPrimaryDark</item>-->
 
-
+<!--    <item name="borderlessButtonStyle">@style/AppTheme.buttonBorderless</item>-->
 
 <!--        <item name="dialogTheme" tools:ignore="NewApi">@style/MyDatePickerDialogTheme</item>-->
 <!--    </style>-->
@@ -36,17 +35,24 @@
     </style>
 
     <style name="AppTheme.imageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:color">@color/white</item>
         <item name="android:background">@drawable/btn_bg_selector</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="NumberPickerText" >
-        <item name="android:textSize">36sp</item>
-        <item name="android:background">@drawable/bg_np_gradient</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="TextButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/btn_bg_selector</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <!--    <style name="customDateDialog" parent="Theme.AppCompat.Dialog.Alert">-->
@@ -57,33 +63,33 @@
     <!--    </style>-->
 
 
-    <style name="MyAppTheme" parent="Theme.AppCompat.Dialog">
-        <item name="colorAccent">#ff6d00</item>
-        <item name="colorControlActivated">#33691e</item>
-        <item name="android:selectableItemBackgroundBorderless" tools:targetApi="lollipop">
-            @color/colorPrimaryDark
-        </item>
-        <item name="dialogTheme">@style/Theme.AppCompat.DayNight.Dialog</item>
-        <item name="colorControlHighlight">#d50000</item>
-    </style>
+<!--    <style name="MyAppTheme" parent="Theme.AppCompat.Dialog">-->
+<!--        <item name="colorAccent">#ff6d00</item>-->
+<!--        <item name="colorControlActivated">#33691e</item>-->
+<!--        <item name="android:selectableItemBackgroundBorderless" tools:targetApi="lollipop">-->
+<!--            @color/colorPrimaryDark-->
+<!--        </item>-->
+<!--        <item name="dialogTheme">@style/Theme.AppCompat.DayNight.Dialog</item>-->
+<!--        <item name="colorControlHighlight">#d50000</item>-->
+<!--    </style>-->
 
 
-    <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light">
+<!--    <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light">-->
 
-        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
-    </style>
+<!--        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>-->
+<!--    </style>-->
 
-    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker" tools:ignore="NewApi">
-        <item name="android:headerBackground">@color/blue</item>
-        <item name="android:dayOfWeekBackground">@color/green</item>
-        <item name="android:dayOfWeekTextAppearance">@color/red</item>
-        <item name="android:headerMonthTextAppearance">@color/yellow</item>
-        <item name="android:headerDayOfMonthTextAppearance">@color/orange</item>
-        <item name="android:headerYearTextAppearance">@color/pink</item>
-        <item name="android:yearListItemTextAppearance">@color/cyan</item>
-        <item name="android:yearListSelectorColor">@color/purple</item>
-        <item name="android:calendarTextColor">@color/limegreen</item>
-    </style>
+<!--    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker" tools:ignore="NewApi">-->
+<!--        <item name="android:headerBackground">@color/blue</item>-->
+<!--        <item name="android:dayOfWeekBackground">@color/green</item>-->
+<!--        <item name="android:dayOfWeekTextAppearance">@color/red</item>-->
+<!--        <item name="android:headerMonthTextAppearance">@color/yellow</item>-->
+<!--        <item name="android:headerDayOfMonthTextAppearance">@color/orange</item>-->
+<!--        <item name="android:headerYearTextAppearance">@color/pink</item>-->
+<!--        <item name="android:yearListItemTextAppearance">@color/cyan</item>-->
+<!--        <item name="android:yearListSelectorColor">@color/purple</item>-->
+<!--        <item name="android:calendarTextColor">@color/limegreen</item>-->
+<!--    </style>-->
 
 
     <!--    <style name="AppTheme." parent="DatePicker">-->
