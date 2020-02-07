@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         data_list = IO.loadData();
         graph = IO.loadGraph();
         alarm_list = IO.loadAlarms();
-        if (alarm == null) alarm = new ModelAlarm(new Date());
+
     }
 
     private void createNavBar() {

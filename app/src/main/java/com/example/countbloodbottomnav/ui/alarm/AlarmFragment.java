@@ -30,6 +30,7 @@ import com.example.countbloodbottomnav.models.ModelAlarm;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -49,31 +50,20 @@ public class AlarmFragment extends Fragment {
     private MainActivity MA;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private Calendar cal = Calendar.getInstance();
+    private int ySet, mSet, dSet;
     private String[] txt_repeat = {"Never", "5 Minutes", "Hourly", "3 Hours", "Daily", "Weekly"};
-    private int yS, mS, dS;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alarm, container, false);
         MA = (MainActivity) getActivity();
-        if (MA != null) cal.setTime(MA.alarm.getDate());
         initUI();
         initOnClick();
         return view;
     }
 
     private void initUI() {
-        lay_bottom = view.findViewById(R.id.lay_bottom);
-        btn_hide = view.findViewById(R.id.btn_hide_alarm_input);
-        btn_setDate = view.findViewById(R.id.btn_setdate);
-        btn_setRepeat = view.findViewById(R.id.btn_setrepeat);
-        btn_setAlarm = view.findViewById(R.id.btn_setalarm);
-        txt_repeatAlarm = view.findViewById(R.id.txt_repeat_alarm);
-        txt_dateAlarm = view.findViewById(R.id.txt_date_alarm);
-        rg_type = view.findViewById(R.id.rg_alarmtype);
-
-        adapter = new AlarmListAdapter(Objects.requireNonNull(getContext()), MA.alarm_list);
-        listView = view.findViewById(R.id.listview_alarm);
-        listView.setAdapter(adapter);
+        if (MA.alarm == null) MA.alarm = new ModelAlarm(new Date());
+        cal.setTime(MA.alarm.getDate());
 
         np_hour = view.findViewById(R.id.alarm_hour);
         np_hour.setMaxValue(23);
@@ -86,6 +76,19 @@ public class AlarmFragment extends Fragment {
         np_minute.setMinValue(0);
         np_minute.setValue(cal.get(Calendar.MINUTE));
         np_minute.setFormatter((int value) -> String.format(Locale.getDefault(),"%02d", value));
+
+        lay_bottom = view.findViewById(R.id.lay_bottom);
+        btn_hide = view.findViewById(R.id.btn_hide_alarm_input);
+        btn_setDate = view.findViewById(R.id.btn_setdate);
+        btn_setRepeat = view.findViewById(R.id.btn_setrepeat);
+        btn_setAlarm = view.findViewById(R.id.btn_setalarm);
+        txt_repeatAlarm = view.findViewById(R.id.txt_repeat_alarm);
+        txt_dateAlarm = view.findViewById(R.id.txt_date_alarm);
+        rg_type = view.findViewById(R.id.rg_alarmtype);
+
+        adapter = new AlarmListAdapter(Objects.requireNonNull(getContext()), MA.alarm_list);
+        listView = view.findViewById(R.id.listview_alarm);
+        listView.setAdapter(adapter);
 
         updateAlarmView();
     }
@@ -106,7 +109,7 @@ public class AlarmFragment extends Fragment {
             updateAlarmView();
         });
 
-        btn_setDate.setOnClickListener(v -> createDatePicker(yS, mS, dS));
+        btn_setDate.setOnClickListener(v -> createDatePicker(ySet, mSet, dSet));
 
         onDateSetListener = (view, y, m, d) -> {
             cal.set(y, m, d);
@@ -135,7 +138,6 @@ public class AlarmFragment extends Fragment {
     private void createDatePicker(int yS, int mS, int dS) {
         DatePickerDialog dialog = new DatePickerDialog(
                 Objects.requireNonNull(getContext()),
-                //R.style.customDateDialog,
                 onDateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),

@@ -43,7 +43,6 @@ public class GraphFragment extends Fragment {
     private MainActivity MA;
     private Calendar cal = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener onDateSetListener;
-    //private Date fromDate, toDate;
     private boolean isFromDate = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,7 +99,7 @@ public class GraphFragment extends Fragment {
         onDateSetListener = (view, y, m, d) -> {
 
             cal.set(y, m, d, 0, 0, 0);
-            if (isFromDate) fromDate = cal.getTime();
+            if (isFromDate) MA.graph.setEnd(cal.getTime());
             else {
                 cal.add(Calendar.HOUR_OF_DAY, 23);
                 cal.add(Calendar.MINUTE, 59);
@@ -116,28 +115,25 @@ public class GraphFragment extends Fragment {
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
-        fromDate = cal.getTime();
+        MA.graph.setStart(cal.getTime());
 
         cal.add(Calendar.HOUR_OF_DAY, 23);
         cal.add(Calendar.MINUTE, 59);
         cal.add(Calendar.SECOND, 59);
-        toDate = cal.getTime();
+        MA.graph.setEnd(cal.getTime());
 
         saveGraphSetup();
     }
 
     private void addToDate(int days, boolean isFrom) {
         if (isFrom) {
-            cal.setTime(fromDate);
+            cal.setTime(MA.graph.getStart());
             cal.add(Calendar.DATE, days);
-            fromDate = cal.getTime();
+            MA.graph.setStart(cal.getTime());
         } else {
-            //cal.setTime(toDate);
             cal.setTime(MA.graph.getEnd());
             cal.add(Calendar.DATE, days);
             MA.graph.setEnd(cal.getTime());
-            //toDate = cal.getTime();
-
         }
         saveGraphSetup();
     }
@@ -180,9 +176,6 @@ public class GraphFragment extends Fragment {
     }
 
     private void updateView() {
-        fromDate = MA.graph.getStart();
-        toDate = MA.graph.getEnd();
-
         txt_fromDate.setText(MainActivity.date.format(MA.graph.getStart()));
         txt_toDate.setText(MainActivity.date.format(MA.graph.getEnd()));
         sw_blood.setChecked(MA.graph.isBlood());
@@ -224,8 +217,8 @@ public class GraphFragment extends Fragment {
                 mgs = new ModelGraph();
         }
 
-        mgs.setStart(fromDate);
-        mgs.setEnd(toDate);
+        mgs.setStart(MA.graph.getStart());
+        mgs.setEnd(MA.graph.getEnd());
         mgs.setBlood(sw_blood.isChecked());
         mgs.setAverage(sw_average.isChecked());
         mgs.setFast(sw_short.isChecked());
@@ -240,10 +233,9 @@ public class GraphFragment extends Fragment {
 
         //Compares dates to get correct data from date interval
         for (ModelData data : MA.data_list) {
-            if (data.getDate().compareTo(fromDate) > 0 && data.getDate().compareTo(toDate) < 0) {
+            if (data.getDate().compareTo(MA.graph.getStart()) > 0 && data.getDate().compareTo(MA.graph.getEnd()) < 0) {
 
                 //sets time of day (tod)
-                Calendar cal = Calendar.getInstance();
                 cal.setTime(data.getDate());
                 float x = 0, tod = ((cal.get(Calendar.HOUR_OF_DAY) / 24f) +
                         (cal.get(Calendar.MINUTE) / (24f * 60)) +

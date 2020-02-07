@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#790000</color>
-    <color name="colorPrimaryDark">#B90000</color>
-    <color name="colorAccent">#C70000</color>
+    <color name="colorPrimary">#960000</color>
+    <color name="colorPrimaryDark">#AF0000</color>
+    <color name="colorAccent">#C80000</color>
 
     <color name="colorBloodSample">#FF6464</color>
     <color name="colorFastInsulin">#D3FAFD</color>
