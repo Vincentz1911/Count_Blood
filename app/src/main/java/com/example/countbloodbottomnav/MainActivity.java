@@ -45,10 +45,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
 
-    public static SimpleDateFormat datetime =
-            new SimpleDateFormat("HH:mm EEE d MMM", Locale.getDefault());
-    public static SimpleDateFormat date =
-            new SimpleDateFormat("EEE d MMM", Locale.getDefault());
+    public static SimpleDateFormat datetime = new SimpleDateFormat("HH:mm EEE d MMM", Locale.getDefault());
+    public static SimpleDateFormat date = new SimpleDateFormat("EEE d MMM", Locale.getDefault());
+    public String f2str(float f) {return String.format(Locale.getDefault(), "%.02f", (float)f);}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

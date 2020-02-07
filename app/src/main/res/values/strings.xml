@@ -47,11 +47,11 @@
 
 
     <plurals name="samples">
-        <item quantity="other">Num: %d</item>
+        <item quantity="other">%d</item>
     </plurals>
 
     <plurals name="average">
-        <item quantity="other">Avg: %s</item>
+        <item quantity="other">%s</item>
     </plurals>
 
 </resources>

@@ -19,35 +19,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient"
-        android:minHeight="30dp"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <TextView
-            android:id="@+id/txt_fromDate"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:drawableStart="@drawable/ic_date_range_36dp"
-            android:text="@string/dd_mm_yyyy"
-            android:theme="@style/whiteText" />
+            android:layout_weight="4">
+
+            <TextView
+                android:id="@+id/txt_fromDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_skip_previous_24dp"
+                android:text="@string/dd_mm_yyyy"
+                android:theme="@style/whiteText" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/btn_hide_graph_input"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="@string/todo"
+            android:padding="3dp"
             android:src="@drawable/ic_visibility_off_24dp" />
 
-        <TextView
-            android:id="@+id/txt_toDate"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:drawableEnd="@drawable/ic_date_event_36dp"
-            android:text="@string/dd_mm_yyyy"
-            android:theme="@style/whiteText" />
+            android:layout_weight="4"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/txt_toDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_skip_next_24dp"
+                android:text="@string/dd_mm_yyyy"
+                android:theme="@style/whiteText" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <!--    CONTROLS-->

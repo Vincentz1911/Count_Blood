@@ -23,13 +23,10 @@ import com.example.countbloodbottomnav.models.ModelData;
 import com.example.countbloodbottomnav.models.ModelGraphData;
 import com.example.countbloodbottomnav.models.ModelGraph;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class GraphFragment extends Fragment {
@@ -44,16 +41,16 @@ public class GraphFragment extends Fragment {
     private RadioGroup rg_timeframe;
     //endregion
     private MainActivity MA;
+    private Calendar cal = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener onDateSetListener;
-    private Date fromDate, toDate;
+    //private Date fromDate, toDate;
     private boolean isFromDate = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_graph, container, false);
-        MA = ((MainActivity) getActivity());
+        MA = (MainActivity) getActivity();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) hideAndSeek();
         initUI();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            hideAndSeek();
         if (MA.graph == null) today(); else updateView();
         initOnClick();
         return view;
@@ -76,6 +73,7 @@ public class GraphFragment extends Fragment {
         sw_short = view.findViewById(R.id.switch_shortterm);
         sw_long = view.findViewById(R.id.switch_longterm);
         rg_timeframe = view.findViewById(R.id.rg_timeframe);
+
     }
 
     private void initOnClick() {
@@ -100,39 +98,46 @@ public class GraphFragment extends Fragment {
         btn_hide.setOnClickListener(v -> hideAndSeek());
 
         onDateSetListener = (view, y, m, d) -> {
-            Calendar cal = Calendar.getInstance();
+
             cal.set(y, m, d, 0, 0, 0);
             if (isFromDate) fromDate = cal.getTime();
             else {
-                cal.add(Calendar.HOUR_OF_DAY, 24);
-                toDate = cal.getTime();
+                cal.add(Calendar.HOUR_OF_DAY, 23);
+                cal.add(Calendar.MINUTE, 59);
+                cal.add(Calendar.SECOND, 59);
+                MA.graph.setEnd(cal.getTime());
             }
             saveGraphSetup();
         };
     }
 
     private void today() {
-        Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         fromDate = cal.getTime();
-        cal.add(Calendar.HOUR_OF_DAY, 24);
+
+        cal.add(Calendar.HOUR_OF_DAY, 23);
+        cal.add(Calendar.MINUTE, 59);
+        cal.add(Calendar.SECOND, 59);
         toDate = cal.getTime();
+
         saveGraphSetup();
     }
 
-    private void addToDate(int days, boolean isfrom) {
-        Calendar cal = Calendar.getInstance();
-        if (isfrom) {
+    private void addToDate(int days, boolean isFrom) {
+        if (isFrom) {
             cal.setTime(fromDate);
             cal.add(Calendar.DATE, days);
             fromDate = cal.getTime();
         } else {
-            cal.setTime(toDate);
+            //cal.setTime(toDate);
+            cal.setTime(MA.graph.getEnd());
             cal.add(Calendar.DATE, days);
-            toDate = cal.getTime();
+            MA.graph.setEnd(cal.getTime());
+            //toDate = cal.getTime();
+
         }
         saveGraphSetup();
     }
@@ -158,10 +163,8 @@ public class GraphFragment extends Fragment {
     }
 
     private void createDatePicker() {
-        Calendar cal = Calendar.getInstance();
         DatePickerDialog dialog = new DatePickerDialog(
                 Objects.requireNonNull(getContext()),
-                R.style.MyAppTheme,
                 onDateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),

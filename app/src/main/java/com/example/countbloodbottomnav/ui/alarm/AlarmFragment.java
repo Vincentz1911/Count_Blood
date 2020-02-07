@@ -135,7 +135,7 @@ public class AlarmFragment extends Fragment {
     private void createDatePicker(int yS, int mS, int dS) {
         DatePickerDialog dialog = new DatePickerDialog(
                 Objects.requireNonNull(getContext()),
-                R.style.customDateDialog,
+                //R.style.customDateDialog,
                 onDateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
