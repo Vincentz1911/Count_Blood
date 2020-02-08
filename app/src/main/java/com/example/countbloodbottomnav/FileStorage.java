@@ -54,6 +54,15 @@ public class FileStorage {
         editor.putString("alarmlist", new Gson().toJson(list)).apply();
     }
 
+    public int loadRequestCode() {
+        return sp.getInt("requestcode", 0);
+    }
+
+    public void saveRequestCode(int code) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("requestcode", code).apply();
+    }
+
     ArrayList<ModelAlarm> loadAlarms() {
         String json = sp.getString("alarmlist", null);
         Type type = new TypeToken<ArrayList<ModelAlarm>>() {

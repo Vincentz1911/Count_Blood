@@ -6,19 +6,19 @@ import java.util.Date;
 public class ModelAlarm implements Serializable {
 
     private String title, message;
-    private int requestCode, icon, repeat;
+    private int requestCode, type, repeat;
     private Date date;
 
     public ModelAlarm(Date date) {
         this.date = date;
     }
 
-    public ModelAlarm(String title, String msg, int requestCode, Date date, int icon, int repeat) {
+    public ModelAlarm(String title, String msg, int requestCode, Date date, int type, int repeat) {
         this.title = title;
         this.message = msg;
         this.requestCode = requestCode;
         this.date = date;
-        this.icon = icon;
+        this.type = type;
         this.repeat = repeat;
     }
 
@@ -34,8 +34,8 @@ public class ModelAlarm implements Serializable {
     public Date getDate() { return date; }
     public void setDate(Date date) { this.date = date; }
 
-    public int getIcon() { return icon; }
-    public void setIcon(int icon) { this.icon = icon; }
+    public int getType() { return type; }
+    public void setType(int type) { this.type = type; }
 
     public int getRepeat() { return repeat; }
     public void setRepeat(int repeat) { this.repeat = repeat; }

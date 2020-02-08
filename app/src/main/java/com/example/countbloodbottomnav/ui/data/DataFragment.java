@@ -46,7 +46,7 @@ public class DataFragment extends Fragment {
     private ArrayAdapter<ModelData> adapter_data;
     //endregion
     private MainActivity MA;
-    private int[] rb_icon = {R.drawable.ic_blood_drop, R.drawable.ic_rabbit, R.drawable.ic_turtle};
+    //private int[] rb_icon = {R.drawable.ic_blood_drop, R.drawable.ic_rabbit, R.drawable.ic_turtle};
     private boolean isSortedDate = false, isSortedValue = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,14 +99,14 @@ public class DataFragment extends Fragment {
         btn_hide.setOnClickListener(v -> hideAndSeek());
 
         rg_dataType.setOnCheckedChangeListener((group, checkedId) -> {
-            if (type() == 0) np1.setValue((int) MA.settings.getDefaultBS());
-            else if (type() == 1) np1.setValue(MA.settings.getFast());
+            if (rbType() == 0) np1.setValue((int) MA.settings.getDefaultBS());
+            else if (rbType() == 1) np1.setValue(MA.settings.getFast());
             else np1.setValue(MA.settings.getLongTerm());
             np2.setValue(0);
         });
     }
 
-    private int type() {
+    private int rbType() {
         switch (rg_dataType.getCheckedRadioButtonId()) {
             case R.id.rb_blood:
                 return 0;
@@ -146,7 +146,7 @@ public class DataFragment extends Fragment {
     }
 
     private void addNewSample(float value) {
-        MA.data_list.add(new ModelData(value, new Date(), type()));
+        MA.data_list.add(new ModelData(value, new Date(), rbType()));
         isSortedDate = false;
         sortByDate();
         MA.IO.saveData(MA.data_list);
@@ -159,7 +159,7 @@ public class DataFragment extends Fragment {
         new AlertDialog.Builder(getActivity())
                 .setTitle("Delete Blood Measurement")
                 .setMessage("Do you want to delete " + data.getDate() + " " + data.getAmount())
-                .setIcon(rb_icon[data.getType()])
+                .setIcon(MainActivity.rb_icon[data.getType()])
                 .setPositiveButton("OK", (dialog, which) -> {
                     MA.data_list.remove(position);
                     MA.IO.saveData(MA.data_list);
@@ -178,9 +178,9 @@ public class DataFragment extends Fragment {
 
         new AlertDialog.Builder(getContext())
                 .setTitle("Input Sample")
-                .setMessage("type in the amount:")
+                .setMessage("rbType in the amount:")
                 .setView(input)
-                .setIcon(rb_icon[type()])
+                .setIcon(MainActivity.rb_icon[rbType()])
                 .setPositiveButton("Add", (dialog12, which) -> {
                     String s = input.getText().toString().replace(",", ".");
                     try {

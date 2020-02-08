@@ -8,12 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.countbloodbottomnav.SplashActivity;
-
 import java.util.Objects;
-
 import static com.example.countbloodbottomnav.MainActivity.CHANNEL_1_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
+
+    private static final String GROUP_COUNTBLOOD = "GROUP";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -24,10 +24,15 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_1_ID)
                 .setSmallIcon(intent.getIntExtra("Icon", 0))
                 .setContentTitle(intent.getStringExtra("Title"))
-                .setContentText(intent.getStringExtra("Message"))
+                .setContentText(intent.getStringExtra("Message") + intent.getIntExtra("Repeat", 0))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setGroup(GROUP_COUNTBLOOD)
+
+                ;
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Objects.requireNonNull(manager).notify(intent.getIntExtra("RequestCode", 0), builder.build());
     }
@@ -47,7 +52,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "CHANNEL1")
 //                //.setContentIntent()
-//                .setSmallIcon(noti.getIcon())
+//                .setSmallIcon(noti.getType())
 //                .setContentTitle(noti.getTitle())
 //                .setContentText(noti.getMessage())
 //                .setAutoCancel(true);
