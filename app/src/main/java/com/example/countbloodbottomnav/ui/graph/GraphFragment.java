@@ -3,6 +3,7 @@ package com.example.countbloodbottomnav.ui.graph;
 import android.app.DatePickerDialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,20 @@ import com.example.countbloodbottomnav.models.ModelData;
 import com.example.countbloodbottomnav.models.ModelGraphData;
 import com.example.countbloodbottomnav.models.ModelGraph;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class GraphFragment extends Fragment {
-
+    //TODO Check for dates not crossing eachother in fromDate and toDate in picker and with buttons
+    //TODO onclick listener on switch buttons
+    //TODO Fix date buttons
     //region UI
     private View view;
     private LinearLayout lay_bottom, lay_graph;
@@ -53,10 +60,6 @@ public class GraphFragment extends Fragment {
         initOnClick();
         return view;
     }
-
-    //TODO Check for dates not crossing eachother in fromDate and toDate in picker and with buttons
-//TODO onclick listener on switch buttons
-    //TODO Fix date buttons
 
     private void initUI() {
         lay_bottom = view.findViewById(R.id.layout_controls);
@@ -104,7 +107,7 @@ public class GraphFragment extends Fragment {
         onDateSetListener = (view, y, m, d) -> {
 
             cal.set(y, m, d, 0, 0, 0);
-            if (isFromDate) MA.graph.setEnd(cal.getTime());
+            if (isFromDate) MA.graph.setStart(cal.getTime());
             else {
                 cal.add(Calendar.HOUR_OF_DAY, 23);
                 cal.add(Calendar.MINUTE, 59);
@@ -132,14 +135,22 @@ public class GraphFragment extends Fragment {
     }
 
     private void addToDate(int days, boolean isFrom) {
+        long oneDay = 1000 * 60 * 60 * 24;
+        long newstart = MA.graph.getStart().getTime() + oneDay * days;
+        long newend = MA.graph.getEnd().getTime() - oneDay + (oneDay * days);
+        if (isFrom && newstart > new Date().getTime()) return;
+        if (!isFrom && newend > new Date().getTime()) return;
+
         if (isFrom) {
             cal.setTime(MA.graph.getStart());
             cal.add(Calendar.DATE, days);
             MA.graph.setStart(cal.getTime());
+            //if (MA.graph.getStart().after(MA.graph.getEnd())) addToDate(1, false);
         } else {
             cal.setTime(MA.graph.getEnd());
             cal.add(Calendar.DATE, days);
             MA.graph.setEnd(cal.getTime());
+            //if (MA.graph.getEnd().after(MA.graph.getStart())) addToDate(-1, true);
         }
         saveGraphSetup();
     }
@@ -165,6 +176,8 @@ public class GraphFragment extends Fragment {
     }
 
     private void createDatePicker() {
+        if (isFromDate) cal.setTime(MA.graph.getStart());
+        else cal.setTime(MA.graph.getEnd());
         DatePickerDialog dialog = new DatePickerDialog(
                 Objects.requireNonNull(getContext()),
                 onDateSetListener,
@@ -172,6 +185,10 @@ public class GraphFragment extends Fragment {
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH));
         dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        dialog.getDatePicker().updateDate(
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH));
         dialog.show();
     }
 
@@ -191,7 +208,6 @@ public class GraphFragment extends Fragment {
         rg_timeframe.check(MA.graph.getId_radioGroup());
 
         lay_graph.removeAllViewsInLayout();
-        //MA.graph.setList();
         lay_graph.addView(new GraphView(getActivity(), MA.graph));
     }
 

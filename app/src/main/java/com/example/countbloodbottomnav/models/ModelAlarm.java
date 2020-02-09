@@ -13,15 +13,6 @@ public class ModelAlarm implements Serializable {
         this.date = date;
     }
 
-    public ModelAlarm(String title, String msg, int requestCode, Date date, int type, int repeat) {
-        this.title = title;
-        this.message = msg;
-        this.requestCode = requestCode;
-        this.date = date;
-        this.type = type;
-        this.repeat = repeat;
-    }
-
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 

@@ -3,7 +3,6 @@ package com.example.countbloodbottomnav.ui;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,7 +132,7 @@ public class SettingsFragment extends Fragment {
                 float tr = ((rnd.nextInt(100) + 30) / 10f);
                 if (tr > 10) tr = ((rnd.nextInt(150) + 30) / 10f);
 
-                c.set(Calendar.HOUR_OF_DAY, rnd.nextInt(24));
+                c.set(Calendar.HOUR_OF_DAY, rnd.nextInt(18)+6);
                 c.set(Calendar.MINUTE, rnd.nextInt(60));
                 c.set(Calendar.SECOND, rnd.nextInt(60));
                 MA.data_list.add(new ModelData(tr, c.getTime(), 0));

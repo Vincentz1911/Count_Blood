@@ -46,6 +46,8 @@ public class EmailFragment extends Fragment {
     }
 
     //TODO Make date ranges in email sending
+    //TODO Make graph inside email as attachment or inside mail (HTML?)
+    //TODO Create link to homepage where data is shown in graph etc.
 
     private void initUI() {
         btn_send = view.findViewById(R.id.btn_send_mail);

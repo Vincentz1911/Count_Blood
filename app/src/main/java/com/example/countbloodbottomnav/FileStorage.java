@@ -2,10 +2,7 @@ package com.example.countbloodbottomnav;
 
 import android.content.SharedPreferences;
 
-import com.example.countbloodbottomnav.models.ModelAlarm;
-import com.example.countbloodbottomnav.models.ModelData;
-import com.example.countbloodbottomnav.models.ModelGraph;
-import com.example.countbloodbottomnav.models.ModelSettings;
+import com.example.countbloodbottomnav.models.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -20,11 +17,6 @@ public class FileStorage {
         this.sp = sharedPreferences;
     }
 
-    public void saveData(ArrayList<ModelData> list) {
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("samplelist", new Gson().toJson(list)).apply();
-    }
-
     ArrayList<ModelData> loadData() {
         String json = sp.getString("samplelist", null);
         Type type = new TypeToken<ArrayList<ModelData>>() {
@@ -34,9 +26,9 @@ public class FileStorage {
         return list;
     }
 
-    public void saveSettings(ModelSettings settings) {
+    public void saveData(ArrayList<ModelData> list) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("settings", new Gson().toJson(settings)).apply();
+        editor.putString("samplelist", new Gson().toJson(list)).apply();
     }
 
     ModelSettings loadSettings() {
@@ -49,18 +41,9 @@ public class FileStorage {
         return settings;
     }
 
-    public void saveAlarms(ArrayList<ModelAlarm> list) {
+    public void saveSettings(ModelSettings settings) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("alarmlist", new Gson().toJson(list)).apply();
-    }
-
-    public int loadRequestCode() {
-        return sp.getInt("requestcode", 0);
-    }
-
-    public void saveRequestCode(int code) {
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt("requestcode", code).apply();
+        editor.putString("settings", new Gson().toJson(settings)).apply();
     }
 
     ArrayList<ModelAlarm> loadAlarms() {
@@ -72,9 +55,9 @@ public class FileStorage {
         return list;
     }
 
-    public void saveGraphSetup(ModelGraph graph) {
+    public void saveAlarms(ArrayList<ModelAlarm> list) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("graph", new Gson().toJson(graph)).apply();
+        editor.putString("alarmlist", new Gson().toJson(list)).apply();
     }
 
     ModelGraph loadGraph() {
@@ -82,5 +65,19 @@ public class FileStorage {
         Type type = new TypeToken<ModelGraph>() {
         }.getType();
         return new Gson().fromJson(json, type);
+    }
+
+    public void saveGraphSetup(ModelGraph graph) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("graph", new Gson().toJson(graph)).apply();
+    }
+
+    public int loadRequestCode() {
+        return sp.getInt("requestcode", 0);
+    }
+
+    public void saveRequestCode(int code) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("requestcode", code).apply();
     }
 }

@@ -46,7 +46,6 @@ public class DataFragment extends Fragment {
     private ArrayAdapter<ModelData> adapter_data;
     //endregion
     private MainActivity MA;
-    //private int[] rb_icon = {R.drawable.ic_blood_drop, R.drawable.ic_rabbit, R.drawable.ic_turtle};
     private boolean isSortedDate = false, isSortedValue = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,6 +105,7 @@ public class DataFragment extends Fragment {
         });
     }
 
+    //TODO Give names instead of numbers (Constant string)
     private int rbType() {
         switch (rg_dataType.getCheckedRadioButtonId()) {
             case R.id.rb_blood:

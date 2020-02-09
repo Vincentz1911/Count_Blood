@@ -23,10 +23,8 @@ import java.util.List;
 class AlarmListAdapter extends ArrayAdapter<ModelAlarm> {
 
     private List<ModelAlarm> list;
-
-    EventListener listener;
-
-    public interface EventListener { void cancelAlarm(ModelAlarm alarm, int position);}
+    private EventListener listener;
+    public interface EventListener {void cancelAlarm(ModelAlarm alarm, int position);}
 
     AlarmListAdapter(@NonNull Context context, ArrayList<ModelAlarm> list, EventListener listener) {
         super(context, 0, list);

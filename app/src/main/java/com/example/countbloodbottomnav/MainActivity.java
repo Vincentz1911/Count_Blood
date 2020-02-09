@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_2_ID = "channel2";
 
     public static SimpleDateFormat datetime = new SimpleDateFormat
-            ("HH:mm EEE d. MMM ''yy", Locale.getDefault());
+            ("HH:mm EEEd.MMM''yy", Locale.getDefault());
     public static SimpleDateFormat date = new SimpleDateFormat
-            ("EEE d. MMM ''yy", Locale.getDefault());
+            ("EEEd.MMM''yy", Locale.getDefault());
     public static int[] rb_icon = {R.drawable.ic_blood_drop, R.drawable.ic_rabbit,
             R.drawable.ic_turtle, R.drawable.ic_notifications};
 

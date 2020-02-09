@@ -92,13 +92,14 @@ public class AlarmFragment extends Fragment implements AlarmListAdapter.EventLis
         listView.setAdapter(adapter);
     }
 
-
     //If the last open drawer is open then close it
-    View oldDrawer;
-    void closeDrawer(View drawer){
+    private View oldDrawer;
+    private void closeDrawer(View drawer){
+        if (oldDrawer !=null && oldDrawer.getVisibility() == View.VISIBLE)
+            oldDrawer.setVisibility(View.GONE);
 
-        if (oldDrawer !=null && oldDrawer.getVisibility() == View.VISIBLE) oldDrawer.setVisibility(View.GONE);
-        if (drawer.getVisibility() == View.GONE && oldDrawer != drawer) drawer.setVisibility(View.VISIBLE);
+        if (drawer.getVisibility() == View.GONE && oldDrawer != drawer)
+            drawer.setVisibility(View.VISIBLE);
         //else drawer.setVisibility(View.GONE);
         oldDrawer = drawer;
         updateAlarmView();
