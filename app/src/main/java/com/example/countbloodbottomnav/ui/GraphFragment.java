@@ -1,9 +1,8 @@
-package com.example.countbloodbottomnav.ui.graph;
+package com.example.countbloodbottomnav.ui;
 
 import android.app.DatePickerDialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +23,11 @@ import com.example.countbloodbottomnav.models.ModelData;
 import com.example.countbloodbottomnav.models.ModelGraphData;
 import com.example.countbloodbottomnav.models.ModelGraph;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class GraphFragment extends Fragment {
     //TODO Check for dates not crossing eachother in fromDate and toDate in picker and with buttons
@@ -40,7 +35,7 @@ public class GraphFragment extends Fragment {
     //TODO Fix date buttons
     //region UI
     private View view;
-    private LinearLayout lay_bottom, lay_graph;
+    private LinearLayout lay_bottom, lay_graph, lay_switch;
     private TextView txt_fromDate, txt_toDate;
     private ImageButton btn_fromDate, btn_toDate, btn_frombk, btn_fromfw, btn_tobk, btn_tofw;
     private ImageView btn_hide;
@@ -52,8 +47,8 @@ public class GraphFragment extends Fragment {
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private boolean isFromDate = true;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_graph, container, false);
+    public View onCreateView(@NonNull LayoutInflater li, ViewGroup vg, Bundle savedInstanceState) {
+        view = li.inflate(R.layout.fragment_graph, vg, false);
         MA = (MainActivity) getActivity();
         initUI();
         if (MA.graph == null) today(); else updateView();
@@ -64,6 +59,7 @@ public class GraphFragment extends Fragment {
     private void initUI() {
         lay_bottom = view.findViewById(R.id.layout_controls);
         lay_graph = view.findViewById(R.id.layout_graph);
+        lay_switch = view.findViewById(R.id.switch_layout);
         txt_fromDate = view.findViewById(R.id.txt_fromDate);
         txt_toDate = view.findViewById(R.id.txt_toDate);
         btn_fromDate = view.findViewById(R.id.button_datefrom);
@@ -95,6 +91,11 @@ public class GraphFragment extends Fragment {
             createDatePicker();
         });
 
+        sw_blood.setOnClickListener(v -> saveGraphSetup());
+        sw_short.setOnClickListener(v -> saveGraphSetup());
+        sw_long.setOnClickListener(v -> saveGraphSetup());
+        sw_average.setOnClickListener(v -> saveGraphSetup());
+
         btn_frombk.setOnClickListener(v -> addToDate(-1, true));
         btn_fromfw.setOnClickListener(v -> addToDate(1, true));
         btn_tobk.setOnClickListener(v -> addToDate(-1, false));
@@ -104,8 +105,9 @@ public class GraphFragment extends Fragment {
 
         btn_hide.setOnClickListener(v -> hideAndSeek());
 
-        onDateSetListener = (view, y, m, d) -> {
 
+
+        onDateSetListener = (view, y, m, d) -> {
             cal.set(y, m, d, 0, 0, 0);
             if (isFromDate) MA.graph.setStart(cal.getTime());
             else {

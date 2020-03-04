@@ -2,14 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="@string/send_mail"
+    <item
+        android:id="@+id/navigation_video"
+        android:icon="@drawable/ic_video_library_black_24dp"
+        android:title="@string/see_video"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/navigation_email"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_mail_outline_black_24dp"/>
+        android:icon="@drawable/ic_mail_outline_black_24dp"
+        android:title="@string/send_mail"
+        app:showAsAction="ifRoom" />
 
-    <item android:title="@string/settings"
+    <item
         android:id="@+id/navigation_settings"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_settings_24dp"/>
-
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom" />
 </menu>

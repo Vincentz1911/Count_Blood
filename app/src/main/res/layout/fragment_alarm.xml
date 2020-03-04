@@ -9,7 +9,8 @@
         android:id="@+id/txt_nextalarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/next_alarm" />
+        android:text="@string/next_alarm"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/listview_alarm"
@@ -156,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_autorenew_36p"
-                android:tint="@color/white" />
+                android:tint="@android:color/white" />
 
             <ImageButton
                 android:id="@+id/btn_setalarm"

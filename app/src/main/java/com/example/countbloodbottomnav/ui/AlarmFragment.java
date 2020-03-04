@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.alarm;
+package com.example.countbloodbottomnav.ui;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -52,7 +52,6 @@ public class AlarmFragment extends Fragment implements AlarmListAdapter.EventLis
     private Calendar cal = Calendar.getInstance();
     private String[] txt_repeat = {"Never", "5 Minutes", "Hourly", "3 Hours", "Daily", "Weekly"};
     private int openPos;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alarm, container, false);
@@ -178,7 +177,7 @@ public class AlarmFragment extends Fragment implements AlarmListAdapter.EventLis
         alertIntent.putExtra("Title", alarm.getTitle());
         alertIntent.putExtra("Message", alarm.getMessage());
         alertIntent.putExtra("RequestCode", alarm.getRequestCode());
-        alertIntent.putExtra("Icon", MainActivity.rb_icon[alarm.getType()]);
+        alertIntent.putExtra("Icon", MainActivity.icons[alarm.getType()]);
         alertIntent.putExtra("Repeat", repeat_int[alarm.getRepeat()]);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -258,7 +257,7 @@ public class AlarmFragment extends Fragment implements AlarmListAdapter.EventLis
         alertIntent.putExtra("Title", MA.alarm.getTitle());
         alertIntent.putExtra("Message", MA.alarm.getMessage());
         alertIntent.putExtra("RequestCode", MA.alarm.getRequestCode());
-        alertIntent.putExtra("Icon", MainActivity.rb_icon[MA.alarm.getType()]);
+        alertIntent.putExtra("Icon", MainActivity.icons[MA.alarm.getType()]);
         alertIntent.putExtra("Repeat", repeat_int[MA.alarm.getRepeat()]);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(

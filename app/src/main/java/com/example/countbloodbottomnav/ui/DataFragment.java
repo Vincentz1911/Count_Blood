@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.data;
+package com.example.countbloodbottomnav.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,7 +29,10 @@ import com.example.countbloodbottomnav.R;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
+
+import static java.lang.String.valueOf;
 
 public class DataFragment extends Fragment {
 
@@ -141,8 +144,9 @@ public class DataFragment extends Fragment {
                 total++;
             }
         }
-        txt_bsAmount.setText(MA.f2str(total));
-        txt_bsAverage.setText(MA.f2str(amount / total));
+        txt_bsAmount.setText(valueOf(total));
+        txt_bsAverage.setText(String.format(
+                Locale.getDefault(), "%.02f", (float) amount / total));
     }
 
     private void addNewSample(float value) {
@@ -159,7 +163,7 @@ public class DataFragment extends Fragment {
         new AlertDialog.Builder(getActivity())
                 .setTitle("Delete Blood Measurement")
                 .setMessage("Do you want to delete " + data.getDate() + " " + data.getAmount())
-                .setIcon(MainActivity.rb_icon[data.getType()])
+                .setIcon(MainActivity.icons[data.getType()])
                 .setPositiveButton("OK", (dialog, which) -> {
                     MA.data_list.remove(position);
                     MA.IO.saveData(MA.data_list);
@@ -180,7 +184,7 @@ public class DataFragment extends Fragment {
                 .setTitle("Input Sample")
                 .setMessage("rbType in the amount:")
                 .setView(input)
-                .setIcon(MainActivity.rb_icon[rbType()])
+                .setIcon(MainActivity.icons[rbType()])
                 .setPositiveButton("Add", (dialog12, which) -> {
                     String s = input.getText().toString().replace(",", ".");
                     try {

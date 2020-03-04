@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,7 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public FileStorage IO;
+    public IOManager IO;
     public ModelSettings settings;
     public ModelGraph graph;
     public ModelAlarm alarm;
@@ -51,27 +49,72 @@ public class MainActivity extends AppCompatActivity {
             ("HH:mm EEEd. MMM ''yy", Locale.getDefault());
     public static SimpleDateFormat date = new SimpleDateFormat
             ("EEE d.MMM''yy", Locale.getDefault());
-    public static int[] rb_icon = {R.drawable.ic_blood_drop, R.drawable.ic_rabbit,
+    public static int[] icons = {R.drawable.ic_blood_drop, R.drawable.ic_rabbit,
             R.drawable.ic_turtle, R.drawable.ic_notifications};
 
-    public String f2str(float f) {
-        return String.format(Locale.getDefault(), "%.02f", (float) f); }
-
-    public Drawable drawable() {
-        return ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_blood_drop); }
+//    public Drawable drawable() {
+//        return ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_blood_drop);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         init();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController navController = Navigation.findNavController(
+                this, R.id.nav_host_fragment);
+
+        switch (item.getItemId()) {
+            case R.id.navigation_settings:
+                navController.navigate(R.id.navigation_settings);
+                return true;
+            case R.id.navigation_email:
+                if (data_list.size() > 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) askPermissions();
+                    navController.navigate(R.id.navigation_email);
+                    return true;
+                } else toast("No data to send!");
+            case R.id.navigation_video:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void askPermissions() {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED)
+            Log.v("", "Permission is granted");
+        else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED)
+            Log.v("", "Permission is granted");
+        else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
+    }
+
     private void init() {
+        setContentView(R.layout.activity_main);
         createNavBar();
         createNotificationChannels();
 
-        IO = new FileStorage(getSharedPreferences("storage", Context.MODE_PRIVATE));
+        IO = new IOManager(getSharedPreferences("storage", Context.MODE_PRIVATE));
         settings = IO.loadSettings();
         data_list = IO.loadData();
         graph = IO.loadGraph();
@@ -102,67 +145,6 @@ public class MainActivity extends AppCompatActivity {
             fullscreen(navView);
     }
 
-    private void fullscreen(BottomNavigationView navView) {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        navView.setVisibility(View.GONE);
-    }
-
-    public void toast(String msg) {
-        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        NavController navController = Navigation.findNavController(
-                this, R.id.nav_host_fragment);
-
-        switch (item.getItemId()) {
-            case R.id.navigation_settings:
-                navController.navigate(R.id.navigation_settings);
-                return true;
-            case R.id.navigation_email:
-                if (data_list.size() > 0) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) askPermissions();
-                    navController.navigate(R.id.navigation_email);
-                    return true;
-                } else toast("No data to send!");
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void askPermissions() {
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED)
-            Log.v("", "Permission is granted");
-        else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
-
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED)
-            Log.v("", "Permission is granted");
-        else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        }
-    }
-
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
@@ -185,5 +167,22 @@ public class MainActivity extends AppCompatActivity {
                 manager.createNotificationChannel(channel2);
             }
         }
+    }
+
+    private void fullscreen(BottomNavigationView navView) {
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        navView.setVisibility(View.GONE);
+    }
+
+    public void toast(String msg) {
+        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

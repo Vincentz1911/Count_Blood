@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.alarm;
+package com.example.countbloodbottomnav.ui;
 
 import androidx.core.app.NotificationCompat;
 import android.app.NotificationManager;
@@ -7,7 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.countbloodbottomnav.SplashActivity;
+import com.example.countbloodbottomnav.MainActivity;
 import java.util.Objects;
 import static com.example.countbloodbottomnav.MainActivity.CHANNEL_1_ID;
 
@@ -17,7 +17,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent actionintent = new Intent(context, SplashActivity.class);
+        Intent actionintent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, actionintent, 0);
 

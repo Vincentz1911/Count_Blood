@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.graph;
+package com.example.countbloodbottomnav.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.countbloodbottomnav.R;
 import com.example.countbloodbottomnav.models.ModelGraphData;
@@ -37,23 +39,23 @@ public class GraphView extends View {
         Paint paint_blood, paint_fast, paint_slow, paint1, paint2, textPaint;
 
         paint_blood = new Paint();
-        paint_blood.setColor(getResources().getColor(R.color.colorGraphBlood));
+        paint_blood.setColor(ContextCompat.getColor(getContext(), R.color.colorGraphBlood));
         paint_blood.setStyle(Paint.Style.FILL);
 
         paint_fast = new Paint();
-        paint_fast.setColor(getResources().getColor(R.color.colorGraphFast));
-        paint_fast.setStrokeWidth(2);
+        paint_fast.setColor(ContextCompat.getColor(getContext(), R.color.colorGraphFast));
+        paint_fast.setStrokeWidth(10);
 
         paint_slow = new Paint();
-        paint_slow.setColor(getResources().getColor(R.color.colorGraphSlow));
-        paint_fast.setStrokeWidth(2);
+        paint_slow.setColor(ContextCompat.getColor(getContext(), R.color.colorGraphSlow));
+        paint_fast.setStrokeWidth(10);
 
         paint1 = new Paint();
-        paint1.setColor(getResources().getColor(R.color.colorPrimaryDark));
+        paint1.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         paint1.setStrokeWidth(1);
 
         paint2 = new Paint();
-        paint2.setColor(getResources().getColor(R.color.colorPrimary));
+        paint2.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         paint2.setStrokeWidth(4);
 
         float sp = getResources().getDisplayMetrics().scaledDensity;
@@ -74,9 +76,9 @@ public class GraphView extends View {
 
         //Add number of days and amount of data as text on top
         long diff =  graph.getEnd().getTime() - graph.getStart().getTime();
-        int numDays = (int) java.util.concurrent.TimeUnit.DAYS.convert(diff, java.util.concurrent.TimeUnit.MILLISECONDS);
+        int numDays = (int) java.util.concurrent.TimeUnit.DAYS.convert(diff, java.util.concurrent.TimeUnit.MILLISECONDS) + 1;
         String s = "# Days : " + numDays + " # Data : " + graph.getList().size();
-        canvas.drawText(s, x1/2, y1-10, paints[5]);
+        canvas.drawText(s, x1/2f, y1-10, paints[5]);
 
         //Draws grid
         for (int x = 0; x <= xGrid; x++) {
@@ -98,8 +100,16 @@ public class GraphView extends View {
 
         //Draw circles for bloodsample and lines for insulin
         for (ModelGraphData d : graph.getList()){
-            if (d.getP() == 0) canvas.drawCircle(d.getX() * x1, d.getY() * y1 / graph.getyGrid(), 10, paints[d.getP()]);
-            else canvas.drawLine(d.getX() * x1, d.getY() * y1 / graph.getyGrid(), d.getX() * x1, y0, paints[d.getP()]);
+            if (d.getP() == 0) canvas.drawCircle(
+                    d.getX() * x1,
+                    d.getY() * y1 / graph.getyGrid(),
+                    10, paints[d.getP()]);
+            else canvas.drawLine(
+                    d.getX() * x1,
+                    d.getY() * y1 / graph.getyGrid(),
+                    d.getX() * x1,
+                    y0,
+                    paints[d.getP()]);
         }
 
     }

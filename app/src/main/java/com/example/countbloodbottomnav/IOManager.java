@@ -9,11 +9,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class FileStorage {
+public class IOManager {
 
     private SharedPreferences sp;
 
-    FileStorage(SharedPreferences sharedPreferences) {
+    IOManager(SharedPreferences sharedPreferences) {
         this.sp = sharedPreferences;
     }
 

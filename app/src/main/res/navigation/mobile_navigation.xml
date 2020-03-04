@@ -8,19 +8,19 @@
 
     <fragment
         android:id="@+id/navigation_data"
-        android:name="com.example.countbloodbottomnav.ui.data.DataFragment"
+        android:name="com.example.countbloodbottomnav.ui.DataFragment"
         android:label="@string/title_data"
         tools:layout="@layout/fragment_data" />
 
     <fragment
         android:id="@+id/navigation_graph"
-        android:name="com.example.countbloodbottomnav.ui.graph.GraphFragment"
+        android:name="com.example.countbloodbottomnav.ui.GraphFragment"
         android:label="@string/title_graph"
         tools:layout="@layout/fragment_graph" />
 
     <fragment
         android:id="@+id/navigation_alarm"
-        android:name="com.example.countbloodbottomnav.ui.alarm.AlarmFragment"
+        android:name="com.example.countbloodbottomnav.ui.AlarmFragment"
         android:label="@string/title_alarm"
         tools:layout="@layout/fragment_alarm" />
 

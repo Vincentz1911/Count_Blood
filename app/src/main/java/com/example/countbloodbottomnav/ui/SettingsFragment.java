@@ -113,7 +113,8 @@ public class SettingsFragment extends Fragment {
                     MA.IO.saveData(MA.data_list);
                     MA.toast("List have been reset");
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> { })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                })
                 .show();
     }
 
@@ -132,7 +133,7 @@ public class SettingsFragment extends Fragment {
                 float tr = ((rnd.nextInt(100) + 30) / 10f);
                 if (tr > 10) tr = ((rnd.nextInt(150) + 30) / 10f);
 
-                c.set(Calendar.HOUR_OF_DAY, rnd.nextInt(18)+6);
+                c.set(Calendar.HOUR_OF_DAY, rnd.nextInt(18) + 6);
                 c.set(Calendar.MINUTE, rnd.nextInt(60));
                 c.set(Calendar.SECOND, rnd.nextInt(60));
                 MA.data_list.add(new ModelData(tr, c.getTime(), 0));
@@ -141,13 +142,16 @@ public class SettingsFragment extends Fragment {
             //Fast-acting insulin
             c.set(Calendar.HOUR_OF_DAY, 7);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.data_list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
+            MA.data_list.add(new ModelData(
+                    MA.settings.getFast() + rnd.nextInt(6) - 3, c.getTime(), 1));
             c.set(Calendar.HOUR_OF_DAY, 12);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.data_list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
+            MA.data_list.add(new ModelData(
+                    MA.settings.getFast() + rnd.nextInt(6) - 3, c.getTime(), 1));
             c.set(Calendar.HOUR_OF_DAY, 18);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.data_list.add(new ModelData(MA.settings.getFast(), c.getTime(), 1));
+            MA.data_list.add(new ModelData(
+                    MA.settings.getFast() + rnd.nextInt(6) - 3, c.getTime(), 1));
 
             //Slow-acting insulin
             c.set(Calendar.HOUR_OF_DAY, 6);
@@ -155,7 +159,7 @@ public class SettingsFragment extends Fragment {
             MA.data_list.add(new ModelData(MA.settings.getLongTerm(), c.getTime(), 2));
             c.set(Calendar.HOUR_OF_DAY, 21);
             c.set(Calendar.MINUTE, rnd.nextInt(60));
-            MA.data_list.add(new ModelData(MA.settings.getLongTerm(), c.getTime(), 2));
+            MA.data_list.add(new ModelData(MA.settings.getLongTermEve(), c.getTime(), 2));
         }
         MA.IO.saveData(MA.data_list);
         MA.toast("Random Data have been generated");

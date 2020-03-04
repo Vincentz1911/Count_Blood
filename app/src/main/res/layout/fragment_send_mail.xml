@@ -41,8 +41,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextButton"
             android:id="@+id/btn_send_mail"
-            android:background="@drawable/btn_bg_selector"
             android:padding="20dp"
             android:text="Create Email" />
     </LinearLayout>

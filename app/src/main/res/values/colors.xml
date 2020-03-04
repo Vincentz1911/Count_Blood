@@ -8,24 +8,9 @@
     <color name="colorFastInsulin">#D3FAFD</color>
     <color name="colorSlowInsulin">#E5FDD0</color>
     <color name="colorButtonNormal">#666666</color>
-    <color name="colorButtonHighlight">#aeaeae</color>
+    <color name="colorButtonHighlight">#AEAEAE</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="red">#FF0000</color>
-    <color name="blue">#00FF00</color>
-    <color name="green">#0000FF</color>
-    <color name="yellow">#FFFF00</color>
-    <color name="orange">#FF7700</color>
-    <color name="cyan">#00FFFF</color>
-    <color name="pink">#FF00FF</color>
-    <color name="purple">#7700FF</color>
-    <color name="lightblue">#0077FF</color>
-    <color name="lightgreen">#00FF77</color>
-    <color name="limegreen">#77FF00</color>
-
-
-
-    <color name="colorGraphBlood">#80FF0000</color>
-    <color name="colorGraphFast">#800000FF</color>
-    <color name="colorGraphSlow">#8000FF00</color>
+    <color name="colorGraphBlood">#70FF0000</color>
+    <color name="colorGraphFast">#700000FF</color>
+    <color name="colorGraphSlow">#7000FF00</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.data;
+package com.example.countbloodbottomnav.ui;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -1,4 +1,4 @@
-package com.example.countbloodbottomnav.ui.alarm;
+package com.example.countbloodbottomnav.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -50,7 +50,7 @@ class AlarmListAdapter extends ArrayAdapter<ModelAlarm> {
         } else imageRepeat.setImageResource(R.drawable.ic_autorenew_36p);
 
         ImageView imageView = listItem.findViewById(R.id.listImage);
-        imageView.setImageResource(MainActivity.rb_icon[alarm.getType()]);
+        imageView.setImageResource(MainActivity.icons[alarm.getType()]);
 
         TextView date = listItem.findViewById(R.id.txt_date);
         date.setText(MainActivity.datetime.format(alarm.getDate()));

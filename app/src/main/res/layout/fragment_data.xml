@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <!--sorting-->
-    <LinearLayout
+    <TableRow
         android:id="@+id/sortingLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,18 +14,16 @@
 
         <Button
             android:id="@+id/btn_sortDate"
-            style="@style/TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_sortValue"
-            style="@style/TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-    </LinearLayout>
+    </TableRow>
 
     <!--listview-->
     <ListView
@@ -41,20 +39,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4">
 
             <TextView
                 android:id="@+id/txt_avgSamples"
+                style="@style/whiteText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_average"
-                android:drawableTint="@color/white"
-                style="@style/whiteText"
-                tools:ignore="UnusedAttribute" />
-        </LinearLayout>
+                android:drawableStart="@drawable/ic_average" />
+        </TableRow>
 
         <ImageView
             android:id="@+id/btn_hide_home_input"
@@ -65,7 +61,7 @@
             android:padding="3dp"
             android:src="@drawable/ic_visibility_off_24dp" />
 
-        <LinearLayout
+        <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
@@ -73,16 +69,15 @@
 
             <TextView
                 android:id="@+id/txt_numSamples"
+                style="@style/whiteText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_opacity_black_24dp"
-                style="@style/whiteText"
-                />
-        </LinearLayout>
+                android:drawableEnd="@drawable/ic_opacity_black_24dp" />
+        </TableRow>
     </LinearLayout>
 
     <!--add new test result-->
-    <LinearLayout
+    <TableRow
         android:id="@+id/lay_addData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,11 +143,10 @@
             android:layout_weight="2"
             android:theme="@style/NumberPickerText" />
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="vertical">
+            android:layout_weight="2">
 
             <ImageButton
                 android:id="@+id/btn_numpad"
@@ -167,6 +161,6 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_add_36dp" />
-        </LinearLayout>
-    </LinearLayout>
+        </TableLayout>
+    </TableRow>
 </LinearLayout>
