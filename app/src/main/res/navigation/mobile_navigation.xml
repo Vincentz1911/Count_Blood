@@ -36,4 +36,9 @@
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_send_mail"/>
 
+    <fragment
+        android:id="@+id/navigation_video"
+        android:name="com.example.countbloodbottomnav.ui.VideoFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_video"/>
 </navigation>

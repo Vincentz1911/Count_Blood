@@ -7,6 +7,7 @@
         android:icon="@drawable/ic_video_library_black_24dp"
         android:title="@string/see_video"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/navigation_email"
         android:icon="@drawable/ic_mail_outline_black_24dp"

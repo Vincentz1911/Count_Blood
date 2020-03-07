@@ -48,7 +48,7 @@ public class GraphView extends View {
 
         paint_slow = new Paint();
         paint_slow.setColor(ContextCompat.getColor(getContext(), R.color.colorGraphSlow));
-        paint_fast.setStrokeWidth(10);
+        paint_slow.setStrokeWidth(10);
 
         paint1 = new Paint();
         paint1.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));

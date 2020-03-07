@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 } else toast("No data to send!");
             case R.id.navigation_video:
+                navController.navigate(R.id.navigation_video);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -128,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_graph,
                 R.id.navigation_alarm,
                 R.id.navigation_settings,
-                R.id.navigation_email).build();
+                R.id.navigation_email,
+                R.id.navigation_video).build();
 
         NavController navController = Navigation.findNavController(
                 this, R.id.nav_host_fragment);

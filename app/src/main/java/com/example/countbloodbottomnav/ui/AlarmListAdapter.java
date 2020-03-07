@@ -38,7 +38,7 @@ class AlarmListAdapter extends ArrayAdapter<ModelAlarm> {
         View listItem = convertView;
 
         if (convertView == null) listItem = LayoutInflater.from(getContext())
-                .inflate(R.layout.alarmlist_item, parent,false);
+                .inflate(R.layout.list_item_alarm, parent,false);
 
         final ModelAlarm alarm = list.get(position);
 

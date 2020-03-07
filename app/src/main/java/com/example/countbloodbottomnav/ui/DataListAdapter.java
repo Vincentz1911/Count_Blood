@@ -16,9 +16,7 @@ import com.example.countbloodbottomnav.MainActivity;
 import com.example.countbloodbottomnav.R;
 import com.example.countbloodbottomnav.models.ModelData;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 class DataListAdapter extends ArrayAdapter<ModelData> {
@@ -38,7 +36,7 @@ class DataListAdapter extends ArrayAdapter<ModelData> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if (listItem == null)
-            listItem = LayoutInflater.from(getContext()).inflate(R.layout.datalist_item, parent, false);
+            listItem = LayoutInflater.from(getContext()).inflate(R.layout.list_item_data, parent, false);
 
         ModelData data = list.get(position);
 
